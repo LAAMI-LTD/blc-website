@@ -7,12 +7,12 @@ export function Badge({
 }: {
   children: React.ReactNode;
   className?: string;
-  tone?: "neutral" | "gold" | "navy";
+  tone?: "neutral" | "accent" | "primary";
 }) {
   const tones = {
     neutral: "bg-[var(--color-paper-dim)] text-[var(--color-ink-soft)] border-[var(--color-line)]",
-    gold: "bg-[var(--color-gold-100)] text-[var(--color-gold-600)] border-[var(--color-gold-300)]",
-    navy: "bg-[var(--color-navy-900)] text-white border-[var(--color-navy-900)]",
+    accent: "bg-[var(--color-orange-100)] text-[var(--color-orange-600)] border-[var(--color-orange-400)]",
+    primary: "bg-[var(--color-green-900)] text-white border-[var(--color-green-900)]",
   };
 
   return (

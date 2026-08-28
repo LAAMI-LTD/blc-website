@@ -1,11 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 import { courses } from "@/data/courses";
 
 const contactSchema = z.object({
@@ -24,6 +34,7 @@ export function ContactForm() {
 
   const {
     register,
+    control,
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
@@ -31,7 +42,7 @@ export function ContactForm() {
     resolver: zodResolver(contactSchema),
   });
 
-  // Mock submission — replace with a real API call (e.g. POST /api/contacts)
+  // Mock submission — replace with a real API call (e.g. POST /api/contact)
   // once a backend is connected.
   async function onSubmit(values: ContactFormValues) {
     setStatus("idle");
@@ -55,8 +66,8 @@ export function ContactForm() {
         role="status"
         className="flex flex-col items-center gap-3 rounded-[var(--radius-lg)] border border-[var(--color-line)] bg-white p-10 text-center"
       >
-        <CheckCircle2 size={40} className="text-[var(--color-gold-500)]" />
-        <h3 className="text-xl font-semibold text-[var(--color-navy-950)]">
+        <CheckCircle2 size={40} className="text-[var(--color-orange-500)]" />
+        <h3 className="text-xl font-semibold text-[var(--color-green-950)]">
           Message sent
         </h3>
         <p className="max-w-sm text-sm text-muted-foreground">
@@ -76,41 +87,39 @@ export function ContactForm() {
       className="grid grid-cols-1 gap-5 rounded-[var(--radius-lg)] border border-[var(--color-line)] bg-white p-6 md:p-8"
     >
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <div>
-          <label htmlFor="fullName" className="text-sm font-medium text-[var(--color-ink)]">
-            Full Name <span className="text-[var(--color-gold-600)]">*</span>
-          </label>
-          <input
+        <div className="grid gap-1.5">
+          <Label htmlFor="fullName">
+            Full Name <span className="text-[var(--color-orange-600)]">*</span>
+          </Label>
+          <Input
             id="fullName"
             type="text"
             autoComplete="name"
-            className="mt-1.5 w-full rounded-[var(--radius-sm)] border border-[var(--color-line)] bg-white px-3.5 py-2.5 text-sm focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
             aria-invalid={!!errors.fullName}
             aria-describedby={errors.fullName ? "fullName-error" : undefined}
             {...register("fullName")}
           />
           {errors.fullName && (
-            <p id="fullName-error" className="mt-1.5 text-xs text-red-600">
+            <p id="fullName-error" className="text-xs text-red-600">
               {errors.fullName.message}
             </p>
           )}
         </div>
 
-        <div>
-          <label htmlFor="email" className="text-sm font-medium text-[var(--color-ink)]">
-            Email <span className="text-[var(--color-gold-600)]">*</span>
-          </label>
-          <input
+        <div className="grid gap-1.5">
+          <Label htmlFor="email">
+            Email <span className="text-[var(--color-orange-600)]">*</span>
+          </Label>
+          <Input
             id="email"
             type="email"
             autoComplete="email"
-            className="mt-1.5 w-full rounded-[var(--radius-sm)] border border-[var(--color-line)] bg-white px-3.5 py-2.5 text-sm focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? "email-error" : undefined}
             {...register("email")}
           />
           {errors.email && (
-            <p id="email-error" className="mt-1.5 text-xs text-red-600">
+            <p id="email-error" className="text-xs text-red-600">
               {errors.email.message}
             </p>
           )}
@@ -118,65 +127,53 @@ export function ContactForm() {
       </div>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <div>
-          <label htmlFor="phone" className="text-sm font-medium text-[var(--color-ink)]">
-            Phone
-          </label>
-          <input
-            id="phone"
-            type="tel"
-            autoComplete="tel"
-            className="mt-1.5 w-full rounded-[var(--radius-sm)] border border-[var(--color-line)] bg-white px-3.5 py-2.5 text-sm focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
-            {...register("phone")}
+        <div className="grid gap-1.5">
+          <Label htmlFor="phone">Phone</Label>
+          <Input id="phone" type="tel" autoComplete="tel" {...register("phone")} />
+        </div>
+
+        <div className="grid gap-1.5">
+          <Label htmlFor="course">Language of Interest</Label>
+          <Controller
+            control={control}
+            name="course"
+            render={({ field }) => (
+              <Select value={field.value} onValueChange={field.onChange}>
+                <SelectTrigger id="course" aria-label="Language of interest">
+                  <SelectValue placeholder="Select a language" />
+                </SelectTrigger>
+                <SelectContent>
+                  {courses.map((c) => (
+                    <SelectItem key={c.slug} value={c.language}>
+                      {c.language}
+                    </SelectItem>
+                  ))}
+                  <SelectItem value="Not sure">Not sure yet</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
           />
         </div>
-
-        <div>
-          <label htmlFor="course" className="text-sm font-medium text-[var(--color-ink)]">
-            Language of Interest
-          </label>
-          <select
-            id="course"
-            className="mt-1.5 w-full rounded-[var(--radius-sm)] border border-[var(--color-line)] bg-white px-3.5 py-2.5 text-sm focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
-            {...register("course")}
-          >
-            <option value="">Select a language</option>
-            {courses.map((c) => (
-              <option key={c.slug} value={c.language}>
-                {c.language}
-              </option>
-            ))}
-            <option value="Not sure">Not sure yet</option>
-          </select>
-        </div>
       </div>
 
-      <div>
-        <label htmlFor="subject" className="text-sm font-medium text-[var(--color-ink)]">
-          Subject
-        </label>
-        <input
-          id="subject"
-          type="text"
-          className="mt-1.5 w-full rounded-[var(--radius-sm)] border border-[var(--color-line)] bg-white px-3.5 py-2.5 text-sm focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
-          {...register("subject")}
-        />
+      <div className="grid gap-1.5">
+        <Label htmlFor="subject">Subject</Label>
+        <Input id="subject" type="text" {...register("subject")} />
       </div>
 
-      <div>
-        <label htmlFor="message" className="text-sm font-medium text-[var(--color-ink)]">
-          Message <span className="text-[var(--color-gold-600)]">*</span>
-        </label>
-        <textarea
+      <div className="grid gap-1.5">
+        <Label htmlFor="message">
+          Message <span className="text-[var(--color-orange-600)]">*</span>
+        </Label>
+        <Textarea
           id="message"
           rows={5}
-          className="mt-1.5 w-full rounded-[var(--radius-sm)] border border-[var(--color-line)] bg-white px-3.5 py-2.5 text-sm focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? "message-error" : undefined}
           {...register("message")}
         />
         {errors.message && (
-          <p id="message-error" className="mt-1.5 text-xs text-red-600">
+          <p id="message-error" className="text-xs text-red-600">
             {errors.message.message}
           </p>
         )}

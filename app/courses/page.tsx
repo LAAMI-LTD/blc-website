@@ -7,20 +7,23 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { courses } from "@/data/courses";
+import { institution } from "@/config/institution";
 
 export const metadata: Metadata = {
-  title: "Language Courses",
-  description:
-    "Explore German, French, Chinese, Finnish, Spanish and Arabic courses at Berlin Language Center — for individuals, students and businesses.",
+  title: "Courses",
+  description: `Explore courses at ${institution.name} (${institution.shortName}) across Languages, ICT, Business & Technical Studies, Health Sciences and Professional Short Courses.`,
 };
+
+// TODO(Phase 3): replace this Languages-only listing with the full
+// department-aware course catalogue (data/departments.ts).
 
 export default function CoursesPage() {
   return (
     <>
       <PageHero
         eyebrow="Courses"
-        title="Six languages. Every level. Every format."
-        description="Choose a language below to see levels, who it's for, and how classes are structured."
+        title="Our Languages Department"
+        description="BBTI offers five departments in total — Languages, ICT, Business & Technical Studies, Health Sciences, and Professional Short Courses. The full multi-department catalogue is coming soon; explore our Languages courses below."
       />
 
       <section className="py-20 md:py-28">
@@ -29,14 +32,14 @@ export default function CoursesPage() {
             {courses.map((course) => (
               <Card key={course.slug} className="flex flex-col">
                 <div className="flex items-center justify-between">
-                  <span className="script-multilingual text-2xl font-medium text-[var(--color-navy-950)]">
+                  <span className="script-multilingual text-2xl font-medium text-[var(--color-green-950)]">
                     {course.nativeGreeting}
                   </span>
                   <Badge tone="gold">
                     {course.levels[0]}–{course.levels[course.levels.length - 1]}
                   </Badge>
                 </div>
-                <h2 className="mt-4 text-xl font-semibold text-[var(--color-navy-950)]">
+                <h2 className="mt-4 text-xl font-semibold text-[var(--color-green-950)]">
                   {course.language}
                 </h2>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -49,7 +52,7 @@ export default function CoursesPage() {
                 </div>
                 <Link
                   href={`/courses/${course.slug}`}
-                  className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-gold-600)] transition-all hover:gap-2.5"
+                  className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-orange-600)] transition-all hover:gap-2.5"
                 >
                   View {course.language} course details
                   <ArrowRight size={16} />
@@ -61,8 +64,8 @@ export default function CoursesPage() {
       </section>
 
       <FinalCTA
-        title="Not sure which language is right for you?"
-        description="Book a free consultation and we'll help you choose the right course, level and format."
+        title="Not sure which course is right for you?"
+        description="Contact us and we'll help you choose the right department, course and format."
       />
     </>
   );

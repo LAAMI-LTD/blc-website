@@ -11,20 +11,20 @@ export function CoursesGrid() {
     <section className="py-20 md:py-28">
       <Container>
         <SectionHeading
-          eyebrow="Our Courses"
-          title="Six languages, taught the same rigorous way"
-          description="Every course follows the CEFR framework and adapts to how you learn best — in a group, one-to-one, or as part of a company program."
+          eyebrow="Languages Department"
+          title="One of five departments at BBTI"
+          description="Language courses are one part of what BBTI offers — full department restructuring (ICT, Business & Technical Studies, Health Sciences, Professional Short Courses) is coming soon. See the full course catalogue on the Courses page."
         />
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {courses.map((course) => (
             <Card key={course.slug} className="flex flex-col">
               <div className="flex items-center justify-between">
-                <span className="script-multilingual text-2xl font-medium text-[var(--color-navy-950)]">
+                <span className="script-multilingual text-2xl font-medium text-[var(--color-green-950)]">
                   {course.nativeGreeting}
                 </span>
-                <Badge tone="gold">{course.levels[0]}–{course.levels[course.levels.length - 1]}</Badge>
+                <Badge tone="accent">{course.levels[0]}–{course.levels[course.levels.length - 1]}</Badge>
               </div>
-              <h3 className="mt-4 text-xl font-semibold text-[var(--color-navy-950)]">
+              <h3 className="mt-4 text-xl font-semibold text-[var(--color-green-950)]">
                 {course.language}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -32,7 +32,7 @@ export function CoursesGrid() {
               </p>
               <Link
                 href={`/courses/${course.slug}`}
-                className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-gold-600)] hover:gap-2.5 transition-all"
+                className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-orange-600)] hover:gap-2.5 transition-all"
               >
                 Explore {course.language}
                 <ArrowRight size={16} />

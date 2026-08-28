@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Manrope, Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { institution } from "@/config/institution";
 
-const fraunces = Fraunces({
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-fraunces",
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  variable: "--font-manrope",
+  weight: ["500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -20,19 +20,33 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Berlin Language Center | Language Courses in Berlin",
-    template: "%s | Berlin Language Center",
+    default: `${institution.name} | ${institution.shortName} Kenya`,
+    template: `%s | ${institution.shortName}`,
   },
-  description:
-    "Berlin Language Center teaches German, French, Chinese, Finnish, Spanish and Arabic to professionals, students and businesses in Berlin. Since 2015.",
-  metadataBase: new URL("https://example.com"),
+  description: institution.description,
+  metadataBase: new URL("https://bbtikenya.co.ke"),
+  keywords: [
+    "Berlin Business Training Institute",
+    "BBTI",
+    "TVET college Kenya",
+    "business training institute Kenya",
+    "professional courses Kenya",
+    "ICT training Kenya",
+    "language courses Kenya",
+  ],
   openGraph: {
-    title: "Berlin Language Center",
-    description:
-      "German, French, Chinese, Finnish, Spanish and Arabic courses in Berlin — for professionals, students and businesses.",
-    siteName: "Berlin Language Center",
-    locale: "en_US",
+    title: `${institution.name} (${institution.shortName})`,
+    description: institution.description,
+    siteName: institution.name,
+    locale: "en_KE",
     type: "website",
+    images: ["/logo/bbti-logo-lockup.jpeg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${institution.name} (${institution.shortName})`,
+    description: institution.tagline,
+    images: ["/logo/bbti-logo-lockup.jpeg"],
   },
 };
 
@@ -41,7 +55,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${fraunces.variable} ${inter.variable} antialiased`}>
+      <body className={`${manrope.variable} ${inter.variable} antialiased`}>
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-white"

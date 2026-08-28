@@ -1,38 +1,40 @@
 import type { Metadata } from "next";
-import { BookOpen, MessageCircle, Globe, PenLine } from "lucide-react";
+import { Briefcase, Target, Eye, Award } from "lucide-react";
 import { PageHero } from "@/components/sections/PageHero";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { Button } from "@/components/ui/Button";
 import { team } from "@/data/team";
+import { institution } from "@/config/institution";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description:
-    "Learn about Berlin Language Center's mission, teaching approach and the languages we've taught in Berlin since 2015.",
+  description: `Learn about ${institution.name} (${institution.shortName}) — a career-focused, TVETA-accredited training institution in Kenya.`,
 };
 
 const values = [
   {
-    icon: MessageCircle,
-    title: "Speak from day one",
-    description: "Classes prioritize real conversation over rote memorization.",
+    icon: Briefcase,
+    title: "Practical, career-focused training",
+    description: "Every course is built around real, employable skills — not just theory.",
   },
   {
-    icon: BookOpen,
-    title: "Structured progress",
-    description: "Every course maps to the CEFR framework, so growth is visible and measurable.",
+    icon: Target,
+    title: "Mission",
+    description:
+      "[Editable placeholder — final mission statement pending institutional approval.]",
   },
   {
-    icon: Globe,
-    title: "Six languages, one standard",
-    description: "German, French, Chinese, Finnish, Spanish and Arabic are all taught with the same rigor.",
+    icon: Eye,
+    title: "Vision",
+    description:
+      "[Editable placeholder — final vision statement pending institutional approval.]",
   },
   {
-    icon: PenLine,
-    title: "Learning that fits your life",
-    description: "Group classes, private lessons and corporate training, built around your schedule.",
+    icon: Award,
+    title: institution.registration.label,
+    description: `Registered under ${institution.registration.number}.`,
   },
 ];
 
@@ -41,31 +43,31 @@ export default function AboutPage() {
     <>
       <PageHero
         eyebrow="About Us"
-        title="A Berlin language school built around real communication"
-        description="Berlin Language Center has taught German, French, Chinese, Finnish, Spanish and Arabic to adults, students and businesses since 2015."
+        title={`About ${institution.name}`}
+        description={institution.description}
       />
 
       <section className="py-20 md:py-28">
         <Container className="grid grid-cols-1 gap-12 lg:grid-cols-2">
           <div>
-            <SectionHeading eyebrow="Our Mission" title="Language learning that leads to real conversations" />
+            <SectionHeading eyebrow="Who We Are" title="Career-focused, practical training" />
             <p className="mt-6 text-base leading-relaxed text-muted-foreground">
-              We started Berlin Language Center to give learners in Berlin a
-              single place to study the languages that matter most to their
-              lives and careers. Whether you&apos;re preparing to work abroad,
-              settling into life in Berlin, or building a team that
-              communicates across borders, our courses are designed to get
-              you speaking with confidence.
+              {institution.shortName} is a career-focused training
+              institution offering practical, professional and
+              industry-oriented education across Languages, ICT, Business
+              &amp; Technical Studies, Health Sciences and Professional
+              Short Courses. Our positioning is simple:{" "}
+              <em>{institution.tagline}</em>.
             </p>
           </div>
           <div>
-            <SectionHeading eyebrow="Our Approach" title="Structured, conversational, and level-appropriate" />
+            <SectionHeading eyebrow="Our Approach" title="Skills you can use immediately" />
             <p className="mt-6 text-base leading-relaxed text-muted-foreground">
-              Every course follows the CEFR framework (A1 through C2, where
-              offered), so you always know where you stand and what&apos;s next.
-              Instructors balance grammar and vocabulary fundamentals with
-              guided conversation practice, so learning translates directly
-              into real-world use.
+              Courses across every department emphasize hands-on, practical
+              skills alongside the certifications and entry requirements set
+              by the relevant examination bodies (KNEC, CDACC, NITA and
+              others, depending on the course). Instructors focus on
+              preparing learners for real workplace demands.
             </p>
           </div>
         </Container>
@@ -73,14 +75,14 @@ export default function AboutPage() {
 
       <section className="bg-[var(--color-paper-dim)] py-20 md:py-28">
         <Container>
-          <SectionHeading eyebrow="What We Value" title="The principles behind every course" align="center" />
+          <SectionHeading eyebrow="Mission, Vision & Accreditation" title="What guides us" align="center" />
           <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {values.map((value) => (
               <div key={value.title} className="text-center">
-                <div className="mx-auto mb-4 inline-flex h-11 w-11 items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-navy-900)] text-[var(--color-gold-400)]">
+                <div className="mx-auto mb-4 inline-flex h-11 w-11 items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-green-900)] text-[var(--color-orange-400)]">
                   <value.icon size={20} />
                 </div>
-                <h3 className="text-base font-semibold text-[var(--color-navy-950)]">{value.title}</h3>
+                <h3 className="text-base font-semibold text-[var(--color-green-950)]">{value.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{value.description}</p>
               </div>
             ))}
@@ -92,8 +94,8 @@ export default function AboutPage() {
         <Container className="flex flex-col items-center gap-6 text-center">
           <SectionHeading
             eyebrow="Our Team"
-            title="Meet the instructors"
-            description={`${team.length} language instructors teach across our six languages.`}
+            title="Meet the Heads of Department"
+            description={`${team.length} department profiles — final names, photos and bios pending institutional approval.`}
             align="center"
           />
           <Button href="/team" variant="ghost" size="lg">

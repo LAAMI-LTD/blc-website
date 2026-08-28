@@ -34,11 +34,11 @@ export function HowItWorks() {
         />
         <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((step) => (
-            <div key={step.number} className="relative border-t-2 border-[var(--color-gold-500)] pt-5">
-              <span className="font-display text-3xl text-[var(--color-gold-500)]">
+            <div key={step.number} className="relative border-t-2 border-[var(--color-orange-500)] pt-5">
+              <span className="font-display text-3xl text-[var(--color-orange-500)]">
                 {step.number}
               </span>
-              <h3 className="mt-3 text-base font-semibold text-[var(--color-navy-950)]">
+              <h3 className="mt-3 text-base font-semibold text-[var(--color-green-950)]">
                 {step.title}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">

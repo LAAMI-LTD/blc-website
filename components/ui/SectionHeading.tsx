@@ -22,14 +22,14 @@ export function SectionHeading({
       )}
     >
       {eyebrow && (
-        <p className="mb-3 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-gold-600)]">
+        <p className="mb-3 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-orange-600)]">
           {align !== "center" && (
-            <span aria-hidden className="h-px w-8 bg-[var(--color-gold-500)]" />
+            <span aria-hidden className="h-px w-8 bg-[var(--color-orange-500)]" />
           )}
           {eyebrow}
         </p>
       )}
-      <h2 className="text-3xl font-semibold text-[var(--color-navy-950)] md:text-4xl">
+      <h2 className="text-3xl font-semibold text-[var(--color-green-950)] md:text-4xl">
         {title}
       </h2>
       {description && (

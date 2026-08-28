@@ -1,33 +1,43 @@
 @import "tailwindcss";
 
 :root {
-  /* ---- Brand color tokens (derived from the BLC logo: deep navy + gold) ---- */
-  --color-navy-950: #0a1730;
-  --color-navy-900: #0f2350;
-  --color-navy-800: #16305f;
-  --color-navy-700: #1f3f74;
-  --color-navy-600: #2c4f8a;
+  /* ---- Brand color tokens (sampled directly from the official BBTI logo) ---- */
+  /* Deep/bright green from the shield gradient */
+  --color-green-950: #0c3d05;
+  --color-green-900: #105404;
+  --color-green-800: #1c6604;
+  --color-green-700: #216d06;
+  --color-green-600: #2e7c07;
+  --color-green-500: #3b8610;
+  --color-green-100: #e6f0e0;
 
-  --color-gold-600: #a8811a;
-  --color-gold-500: #c9a227;
-  --color-gold-400: #d8b84a;
-  --color-gold-300: #e6cd7c;
-  --color-gold-100: #f6ecc9;
+  /* Teal from the swoosh figure */
+  --color-teal-600: #077679;
+  --color-teal-500: #089598;
+  --color-teal-300: #5db9bb;
+  --color-teal-100: #e0f4f4;
 
-  --color-paper: #faf8f3;
-  --color-paper-dim: #f2efe6;
-  --color-ink: #14213d;
-  --color-ink-soft: #4a5570;
-  --color-line: #e2ddcd;
+  /* Orange from the arrows — CTA/highlight color */
+  --color-orange-600: #c4650d;
+  --color-orange-500: #e97a12;
+  --color-orange-400: #f0954a;
+  --color-orange-100: #fce9d5;
+
+  --color-paper: #f7faf6;
+  --color-paper-dim: #eef4ec;
+  --color-ink: #17241a;
+  --color-ink-soft: #4c5a4f;
+  --color-line: #dbe6d8;
+  --color-charcoal: #1f2b21;
 
   /* ---- Semantic tokens ---- */
   --background: var(--color-paper);
   --foreground: var(--color-ink);
-  --primary: var(--color-navy-900);
+  --primary: var(--color-green-900);
   --primary-foreground: #ffffff;
-  --secondary: var(--color-navy-700);
-  --accent: var(--color-gold-500);
-  --accent-foreground: var(--color-navy-950);
+  --secondary: var(--color-teal-600);
+  --accent: var(--color-orange-500);
+  --accent-foreground: #ffffff;
   --muted: var(--color-paper-dim);
   --muted-foreground: var(--color-ink-soft);
   --border: var(--color-line);
@@ -55,22 +65,28 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
 
-  --color-navy-950: var(--color-navy-950);
-  --color-navy-900: var(--color-navy-900);
-  --color-navy-800: var(--color-navy-800);
-  --color-navy-700: var(--color-navy-700);
-  --color-navy-600: var(--color-navy-600);
-  --color-gold-600: var(--color-gold-600);
-  --color-gold-500: var(--color-gold-500);
-  --color-gold-400: var(--color-gold-400);
-  --color-gold-300: var(--color-gold-300);
-  --color-gold-100: var(--color-gold-100);
+  --color-green-950: var(--color-green-950);
+  --color-green-900: var(--color-green-900);
+  --color-green-800: var(--color-green-800);
+  --color-green-700: var(--color-green-700);
+  --color-green-600: var(--color-green-600);
+  --color-green-500: var(--color-green-500);
+  --color-green-100: var(--color-green-100);
+  --color-teal-600: var(--color-teal-600);
+  --color-teal-500: var(--color-teal-500);
+  --color-teal-300: var(--color-teal-300);
+  --color-teal-100: var(--color-teal-100);
+  --color-orange-600: var(--color-orange-600);
+  --color-orange-500: var(--color-orange-500);
+  --color-orange-400: var(--color-orange-400);
+  --color-orange-100: var(--color-orange-100);
   --color-paper: var(--color-paper);
   --color-paper-dim: var(--color-paper-dim);
   --color-ink: var(--color-ink);
   --color-ink-soft: var(--color-ink-soft);
+  --color-charcoal: var(--color-charcoal);
 
-  --font-display: var(--font-fraunces);
+  --font-display: var(--font-manrope);
   --font-sans: var(--font-inter);
 
   --container-width: var(--container-width);
@@ -101,7 +117,7 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font-display), Georgia, serif;
-  color: var(--color-navy-950);
+  color: var(--color-green-950);
   letter-spacing: -0.01em;
 }
 

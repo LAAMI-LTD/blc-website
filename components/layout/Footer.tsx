@@ -1,33 +1,52 @@
 import Link from "next/link";
 import Image from "next/image";
-import { navLinks, site, contact, socialLinks } from "@/data/site";
-import { courses } from "@/data/courses";
+import {
+  navLinks,
+  institution,
+  contact,
+  branches,
+  businessHours,
+  socialLinks,
+} from "@/config/institution";
 import { Container } from "@/components/ui/Container";
+
+const departmentLinks = [
+  "Languages",
+  "ICT",
+  "Business & Technical Studies",
+  "Health Sciences",
+  "Professional Short Courses",
+];
 
 export function Footer() {
   return (
-    <footer className="border-t border-[var(--color-line)] bg-[var(--color-navy-950)] text-white/80">
+    <footer className="border-t border-[var(--color-line)] bg-[var(--color-green-950)] text-white/80">
       <Container className="grid grid-cols-1 gap-10 py-16 md:grid-cols-4">
         <div>
           <Link href="/" className="flex items-center gap-3">
             <Image
-              src="/logo/blc-logo.jpeg"
-              alt="Berlin Language Center logo"
-              width={40}
-              height={40}
-              className="h-10 w-10 rounded-full object-cover"
+              src="/logo/bbti-logo.png"
+              alt="Berlin Business Training Institute (BBTI) logo"
+              width={48}
+              height={48}
+              className="h-12 w-12 object-contain"
             />
-            <span className="font-display text-base font-semibold text-white">
-              Berlin Language Center
+            <span className="font-display text-sm font-bold leading-tight text-white">
+              Berlin Business
+              <br />
+              Training Institute
             </span>
           </Link>
-          <p className="mt-4 text-sm leading-relaxed text-white/60">
-            {site.description}
+          <p className="mt-4 text-sm italic text-[var(--color-orange-400)]">
+            &ldquo;{institution.tagline}&rdquo;
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-white/60">
+            {institution.description}
           </p>
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-[var(--color-gold-400)]">
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-[var(--color-orange-400)]">
             Quick Links
           </h3>
           <ul className="mt-4 space-y-2.5 text-sm">
@@ -42,14 +61,14 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-[var(--color-gold-400)]">
-            Languages
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-[var(--color-orange-400)]">
+            Departments
           </h3>
           <ul className="mt-4 space-y-2.5 text-sm">
-            {courses.map((c) => (
-              <li key={c.slug}>
-                <Link href={`/courses/${c.slug}`} className="text-white/70 hover:text-white">
-                  {c.language}
+            {departmentLinks.map((d) => (
+              <li key={d}>
+                <Link href="/courses" className="text-white/70 hover:text-white">
+                  {d}
                 </Link>
               </li>
             ))}
@@ -57,34 +76,56 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-[var(--color-gold-400)]">
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-[var(--color-orange-400)]">
             Contact
           </h3>
           <ul className="mt-4 space-y-2.5 text-sm text-white/70">
             <li>{contact.phone}</li>
             <li>{contact.email}</li>
-            <li>{contact.address}</li>
+            <li>{contact.location}</li>
           </ul>
-          <div className="mt-5 flex gap-4">
-            {socialLinks.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                className="text-xs text-white/60 underline underline-offset-4 hover:text-white"
-              >
-                {s.label}
-              </a>
+
+          <h3 className="mt-6 text-sm font-semibold uppercase tracking-wide text-[var(--color-orange-400)]">
+            Branches
+          </h3>
+          <p className="mt-3 text-sm text-white/70">{branches.join(" · ")}</p>
+
+          <h3 className="mt-6 text-sm font-semibold uppercase tracking-wide text-[var(--color-orange-400)]">
+            Business Hours
+          </h3>
+          <ul className="mt-3 space-y-1 text-sm text-white/70">
+            {businessHours.map((h) => (
+              <li key={h.days} className="flex justify-between gap-4">
+                <span>{h.days}</span>
+                <span>{h.time}</span>
+              </li>
             ))}
-          </div>
+          </ul>
+
+          {socialLinks.length > 0 && (
+            <div className="mt-5 flex gap-4">
+              {socialLinks.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  className="text-xs text-white/60 underline underline-offset-4 hover:text-white"
+                >
+                  {s.label}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
       </Container>
 
       <div className="border-t border-white/10 py-6">
         <Container className="flex flex-col items-center justify-between gap-3 text-xs text-white/50 sm:flex-row">
           <p>
-            © {new Date().getFullYear()} {site.name}. All rights reserved.
+            © {new Date().getFullYear()} {institution.name}. All rights reserved.
           </p>
-          <p>Est. {site.foundedYear} · Berlin, Germany</p>
+          <p>
+            {institution.registration.label}: {institution.registration.number}
+          </p>
         </Container>
       </div>
     </footer>

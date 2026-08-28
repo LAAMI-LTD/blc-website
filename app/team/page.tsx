@@ -5,10 +5,11 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { team } from "@/data/team";
+import { institution } from "@/config/institution";
 
 export const metadata: Metadata = {
   title: "Our Team",
-  description: "Meet the language instructors at Berlin Language Center.",
+  description: `Meet the department instructors at ${institution.name} (${institution.shortName}).`,
 };
 
 export default function TeamPage() {
@@ -17,7 +18,7 @@ export default function TeamPage() {
       <PageHero
         eyebrow="Our Team"
         title="The instructors behind every course"
-        description="Each of our six languages is taught by a dedicated instructor. Profile details below are placeholders pending final content."
+        description="Profile details below are placeholders pending final Head of Department information — a full department-based team structure is coming in a later phase."
       />
 
       <section className="py-20 md:py-28">
@@ -28,10 +29,10 @@ export default function TeamPage() {
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-paper-dim)] text-xs font-medium text-muted-foreground">
                   Photo
                 </div>
-                <h3 className="text-lg font-semibold text-[var(--color-navy-950)]">
+                <h3 className="text-lg font-semibold text-[var(--color-green-950)]">
                   {member.name}
                 </h3>
-                <p className="text-sm text-[var(--color-gold-600)]">{member.role}</p>
+                <p className="text-sm text-[var(--color-orange-600)]">{member.role}</p>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                   {member.bio}
                 </p>

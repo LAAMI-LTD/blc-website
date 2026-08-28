@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { navLinks, site } from "@/data/site";
+import { navLinks, institution } from "@/config/institution";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
@@ -22,9 +22,11 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
+  const [lastPathname, setLastPathname] = useState(pathname);
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
     setOpen(false);
-  }, [pathname]);
+  }
 
   return (
     <header
@@ -36,17 +38,23 @@ export function Navbar() {
       )}
     >
       <Container className="flex h-18 items-center justify-between py-3">
-        <Link href="/" className="flex items-center gap-3" aria-label={`${site.name} — Home`}>
+        <Link
+          href="/"
+          className="flex items-center gap-3"
+          aria-label={`${institution.name} — Home`}
+        >
           <Image
-            src="/logo/blc-logo.jpeg"
-            alt="Berlin Language Center logo"
-            width={44}
-            height={44}
-            className="h-11 w-11 rounded-full object-cover"
+            src="/logo/bbti-logo.png"
+            alt="Berlin Business Training Institute (BBTI) logo"
+            width={48}
+            height={48}
+            className="h-12 w-12 object-contain"
             priority
           />
-          <span className="hidden font-display text-lg font-semibold text-[var(--color-navy-950)] sm:block">
-            Berlin Language Center
+          <span className="hidden font-display text-base font-bold leading-tight text-[var(--color-green-950)] sm:block">
+            Berlin Business
+            <br />
+            Training Institute
           </span>
         </Link>
 
@@ -56,8 +64,8 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               className={cn(
-                "text-sm font-medium text-[var(--color-ink)] transition-colors hover:text-[var(--color-gold-600)]",
-                pathname === link.href && "text-[var(--color-gold-600)]"
+                "text-sm font-medium text-[var(--color-ink)] transition-colors hover:text-[var(--color-orange-600)]",
+                pathname === link.href && "text-[var(--color-orange-600)]"
               )}
             >
               {link.label}
@@ -67,12 +75,12 @@ export function Navbar() {
 
         <div className="hidden md:block">
           <Button href="/contact" size="md">
-            Book a Free Consultation
+            Enquire Now
           </Button>
         </div>
 
         <button
-          className="inline-flex items-center justify-center rounded-md p-2 text-[var(--color-navy-950)] md:hidden"
+          className="inline-flex items-center justify-center rounded-md p-2 text-[var(--color-green-950)] md:hidden"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
@@ -90,14 +98,14 @@ export function Navbar() {
                 href={link.href}
                 className={cn(
                   "rounded-md px-3 py-3 text-base font-medium text-[var(--color-ink)] hover:bg-[var(--color-paper-dim)]",
-                  pathname === link.href && "text-[var(--color-gold-600)]"
+                  pathname === link.href && "text-[var(--color-orange-600)]"
                 )}
               >
                 {link.label}
               </Link>
             ))}
             <Button href="/contact" size="md" className="mt-3 w-full">
-              Book a Free Consultation
+              Enquire Now
             </Button>
           </Container>
         </div>

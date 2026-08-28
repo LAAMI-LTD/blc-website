@@ -17,11 +17,11 @@ const base =
 
 const variants = {
   primary:
-    "bg-accent text-accent-foreground hover:bg-[var(--color-gold-400)] shadow-sm hover:shadow-md",
+    "bg-accent text-accent-foreground hover:bg-[var(--color-orange-600)] shadow-sm hover:shadow-md",
   secondary:
-    "bg-primary text-primary-foreground hover:bg-[var(--color-navy-800)]",
+    "bg-primary text-primary-foreground hover:bg-[var(--color-green-800)]",
   ghost:
-    "bg-transparent text-primary border border-[var(--color-navy-900)]/20 hover:border-[var(--color-navy-900)]/50 hover:bg-primary/5",
+    "bg-transparent text-primary border border-[var(--color-green-900)]/20 hover:border-[var(--color-green-900)]/50 hover:bg-primary/5",
 };
 
 const sizes = {

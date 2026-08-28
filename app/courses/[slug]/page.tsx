@@ -39,15 +39,15 @@ export default async function CourseDetailPage({
       <section className="border-b border-[var(--color-line)] bg-[var(--color-paper-dim)] py-16 md:py-20">
         <Container className="flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="mb-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-gold-600)]">
-              <span aria-hidden className="h-px w-8 bg-[var(--color-gold-500)]" />
+            <p className="mb-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-orange-600)]">
+              <span aria-hidden className="h-px w-8 bg-[var(--color-orange-500)]" />
               Course
             </p>
             <div className="flex items-center gap-4">
-              <span className="script-multilingual text-4xl font-medium text-[var(--color-navy-950)]">
+              <span className="script-multilingual text-4xl font-medium text-[var(--color-green-950)]">
                 {course.nativeGreeting}
               </span>
-              <h1 className="text-4xl font-semibold text-[var(--color-navy-950)] md:text-5xl">
+              <h1 className="text-4xl font-semibold text-[var(--color-green-950)] md:text-5xl">
                 {course.language}
               </h1>
             </div>
@@ -64,24 +64,24 @@ export default async function CourseDetailPage({
       <section className="py-20 md:py-28">
         <Container className="grid grid-cols-1 gap-14 lg:grid-cols-[1.4fr_1fr]">
           <div>
-            <h2 className="text-2xl font-semibold text-[var(--color-navy-950)]">Overview</h2>
+            <h2 className="text-2xl font-semibold text-[var(--color-green-950)]">Overview</h2>
             <p className="mt-4 text-base leading-relaxed text-muted-foreground">
               {course.description}
             </p>
 
-            <h2 className="mt-12 text-2xl font-semibold text-[var(--color-navy-950)]">
+            <h2 className="mt-12 text-2xl font-semibold text-[var(--color-green-950)]">
               What You&apos;ll Be Able To Do
             </h2>
             <ul className="mt-4 space-y-3">
               {course.outcomes.map((outcome) => (
                 <li key={outcome} className="flex items-start gap-3 text-sm text-[var(--color-ink)]">
-                  <Check size={18} className="mt-0.5 shrink-0 text-[var(--color-gold-500)]" />
+                  <Check size={18} className="mt-0.5 shrink-0 text-[var(--color-orange-500)]" />
                   {outcome}
                 </li>
               ))}
             </ul>
 
-            <h2 className="mt-12 text-2xl font-semibold text-[var(--color-navy-950)]">Who It&apos;s For</h2>
+            <h2 className="mt-12 text-2xl font-semibold text-[var(--color-green-950)]">Who It&apos;s For</h2>
             <div className="mt-4 flex flex-wrap gap-2">
               {course.audience.map((a) => (
                 <Badge key={a}>{a}</Badge>
@@ -90,7 +90,7 @@ export default async function CourseDetailPage({
           </div>
 
           <aside className="h-fit rounded-[var(--radius-lg)] border border-[var(--color-line)] bg-white p-6 shadow-[var(--shadow-sm)]">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-[var(--color-gold-600)]">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-[var(--color-orange-600)]">
               Course Details
             </h3>
             <dl className="mt-5 space-y-5 text-sm">
@@ -98,7 +98,7 @@ export default async function CourseDetailPage({
                 <dt className="text-muted-foreground">Levels Offered</dt>
                 <dd className="mt-1.5 flex flex-wrap gap-2">
                   {course.levels.map((l) => (
-                    <Badge key={l} tone="navy">{l}</Badge>
+                    <Badge key={l} tone="gold">{l}</Badge>
                   ))}
                 </dd>
               </div>
@@ -124,7 +124,7 @@ export default async function CourseDetailPage({
 
       <FinalCTA
         title={`Ready to start learning ${course.language}?`}
-        description="Book a free consultation and we'll help you find the right level and format."
+        description="Contact us and we'll help you find the right level and format."
       />
     </>
   );
