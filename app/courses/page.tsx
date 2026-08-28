@@ -35,7 +35,7 @@ export default function CoursesPage() {
                   <span className="script-multilingual text-2xl font-medium text-[var(--color-green-950)]">
                     {course.nativeGreeting}
                   </span>
-                  <Badge tone="gold">
+                  <Badge tone="accent">
                     {course.levels[0]}–{course.levels[course.levels.length - 1]}
                   </Badge>
                 </div>

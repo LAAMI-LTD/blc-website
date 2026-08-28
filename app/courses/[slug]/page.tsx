@@ -98,7 +98,7 @@ export default async function CourseDetailPage({
                 <dt className="text-muted-foreground">Levels Offered</dt>
                 <dd className="mt-1.5 flex flex-wrap gap-2">
                   {course.levels.map((l) => (
-                    <Badge key={l} tone="gold">{l}</Badge>
+                    <Badge key={l} tone="accent">{l}</Badge>
                   ))}
                 </dd>
               </div>
