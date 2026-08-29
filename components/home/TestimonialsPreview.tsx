@@ -2,6 +2,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { TestimonialCard } from "@/components/testimonials/TestimonialCard";
+import { Reveal } from "@/components/ui/Reveal";
 import { testimonials } from "@/data/testimonials";
 
 export function TestimonialsPreview() {
@@ -15,7 +16,9 @@ export function TestimonialsPreview() {
         />
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {testimonials.slice(0, 3).map((t, i) => (
-            <TestimonialCard key={`${t.name}-${i}`} testimonial={t} />
+            <Reveal key={`${t.name}-${i}`} delay={i * 0.06}>
+              <TestimonialCard testimonial={t} />
+            </Reveal>
           ))}
         </div>
         <div className="mt-10 text-center">

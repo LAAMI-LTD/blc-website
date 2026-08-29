@@ -43,13 +43,12 @@ export const businessHours = [
   { days: "Sunday", time: "12:00 PM – 6:00 PM" },
 ];
 
-// NOTE: a "Testimonials" link will be added here in Phase 3 once
-// /app/testimonials/page.tsx exists — omitted for now to avoid a dead link.
 export const navLinks: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Courses", href: "/courses" },
   { label: "Team", href: "/team" },
+  { label: "Testimonials", href: "/testimonials" },
   { label: "Contact", href: "/contact" },
 ];
 

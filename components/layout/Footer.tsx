@@ -8,15 +8,8 @@ import {
   businessHours,
   socialLinks,
 } from "@/config/institution";
+import { departments } from "@/data/departments";
 import { Container } from "@/components/ui/Container";
-
-const departmentLinks = [
-  "Languages",
-  "ICT",
-  "Business & Technical Studies",
-  "Health Sciences",
-  "Professional Short Courses",
-];
 
 export function Footer() {
   return (
@@ -65,10 +58,10 @@ export function Footer() {
             Departments
           </h3>
           <ul className="mt-4 space-y-2.5 text-sm">
-            {departmentLinks.map((d) => (
-              <li key={d}>
-                <Link href="/courses" className="text-white/70 hover:text-white">
-                  {d}
+            {departments.map((d) => (
+              <li key={d.slug}>
+                <Link href={`/departments/${d.slug}`} className="text-white/70 hover:text-white">
+                  {d.name}
                 </Link>
               </li>
             ))}

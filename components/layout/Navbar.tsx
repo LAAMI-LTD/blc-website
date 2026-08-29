@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { AnimatePresence, motion } from "motion/react";
 import { Menu, X } from "lucide-react";
 import { navLinks, institution } from "@/config/institution";
 import { Container } from "@/components/ui/Container";
@@ -59,18 +60,22 @@ export function Navbar() {
         </Link>
 
         <nav aria-label="Primary" className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "text-sm font-medium text-[var(--color-ink)] transition-colors hover:text-[var(--color-orange-600)]",
-                pathname === link.href && "text-[var(--color-orange-600)]"
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={isActive ? "page" : undefined}
+                className={cn(
+                  "text-sm font-medium text-[var(--color-ink)] transition-colors hover:text-[var(--color-orange-600)]",
+                  isActive && "text-[var(--color-orange-600)]"
+                )}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="hidden md:block">
@@ -80,36 +85,50 @@ export function Navbar() {
         </div>
 
         <button
-          className="inline-flex items-center justify-center rounded-md p-2 text-[var(--color-green-950)] md:hidden"
+          className="inline-flex items-center justify-center rounded-md p-2 text-[var(--color-green-950)] transition-transform duration-150 active:scale-90 md:hidden"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
+          aria-controls="mobile-nav"
           onClick={() => setOpen((v) => !v)}
         >
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
       </Container>
 
-      {open && (
-        <div className="border-t border-[var(--color-line)] bg-[var(--color-paper)] md:hidden">
-          <Container className="flex flex-col gap-1 py-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "rounded-md px-3 py-3 text-base font-medium text-[var(--color-ink)] hover:bg-[var(--color-paper-dim)]",
-                  pathname === link.href && "text-[var(--color-orange-600)]"
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
-            <Button href="/contact" size="md" className="mt-3 w-full">
-              Enquire Now
-            </Button>
-          </Container>
-        </div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="mobile-nav"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            className="overflow-hidden border-t border-[var(--color-line)] bg-[var(--color-paper)] md:hidden"
+          >
+            <Container className="flex flex-col gap-1 py-4">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    aria-current={isActive ? "page" : undefined}
+                    className={cn(
+                      "rounded-md px-3 py-3 text-base font-medium text-[var(--color-ink)] hover:bg-[var(--color-paper-dim)]",
+                      isActive && "text-[var(--color-orange-600)]"
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
+              <Button href="/contact" size="md" className="mt-3 w-full">
+                Enquire Now
+              </Button>
+            </Container>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
