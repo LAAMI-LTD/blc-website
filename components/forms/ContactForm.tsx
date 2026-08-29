@@ -16,14 +16,14 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { courses } from "@/data/courses";
+import { departments } from "@/data/departments";
 
 const contactSchema = z.object({
   fullName: z.string().min(2, "Please enter your full name."),
   email: z.string().email("Please enter a valid email address."),
   phone: z.string().optional(),
   subject: z.string().optional(),
-  course: z.string().optional(),
+  department: z.string().optional(),
   message: z.string().min(10, "Please add a short message (10+ characters)."),
 });
 
@@ -133,19 +133,19 @@ export function ContactForm() {
         </div>
 
         <div className="grid gap-1.5">
-          <Label htmlFor="course">Language of Interest</Label>
+          <Label htmlFor="department">Department / Course of Interest</Label>
           <Controller
             control={control}
-            name="course"
+            name="department"
             render={({ field }) => (
-              <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger id="course" aria-label="Language of interest">
-                  <SelectValue placeholder="Select a language" />
+              <Select value={field.value ?? ""} onValueChange={field.onChange}>
+                <SelectTrigger id="department" aria-label="Department of interest">
+                  <SelectValue placeholder="Select a department" />
                 </SelectTrigger>
                 <SelectContent>
-                  {courses.map((c) => (
-                    <SelectItem key={c.slug} value={c.language}>
-                      {c.language}
+                  {departments.map((d) => (
+                    <SelectItem key={d.slug} value={d.name}>
+                      {d.name}
                     </SelectItem>
                   ))}
                   <SelectItem value="Not sure">Not sure yet</SelectItem>

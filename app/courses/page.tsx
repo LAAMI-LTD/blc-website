@@ -1,70 +1,37 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/sections/PageHero";
 import { Container } from "@/components/ui/Container";
-import { Card } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
+import { DepartmentCard } from "@/components/departments/DepartmentCard";
 import { FinalCTA } from "@/components/sections/FinalCTA";
-import { courses } from "@/data/courses";
+import { departments } from "@/data/departments";
 import { institution } from "@/config/institution";
 
 export const metadata: Metadata = {
-  title: "Courses",
+  title: "Courses & Departments",
   description: `Explore courses at ${institution.name} (${institution.shortName}) across Languages, ICT, Business & Technical Studies, Health Sciences and Professional Short Courses.`,
 };
-
-// TODO(Phase 3): replace this Languages-only listing with the full
-// department-aware course catalogue (data/departments.ts).
 
 export default function CoursesPage() {
   return (
     <>
       <PageHero
         eyebrow="Courses"
-        title="Our Languages Department"
-        description="BBTI offers five departments in total — Languages, ICT, Business & Technical Studies, Health Sciences, and Professional Short Courses. The full multi-department catalogue is coming soon; explore our Languages courses below."
+        title="Five departments. One career-focused institute."
+        description="Choose a department below to see courses, entry requirements, exam bodies and durations."
       />
 
       <section className="py-20 md:py-28">
         <Container>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {courses.map((course) => (
-              <Card key={course.slug} className="flex flex-col">
-                <div className="flex items-center justify-between">
-                  <span className="script-multilingual text-2xl font-medium text-[var(--color-green-950)]">
-                    {course.nativeGreeting}
-                  </span>
-                  <Badge tone="accent">
-                    {course.levels[0]}–{course.levels[course.levels.length - 1]}
-                  </Badge>
-                </div>
-                <h2 className="mt-4 text-xl font-semibold text-[var(--color-green-950)]">
-                  {course.language}
-                </h2>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {course.description}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {course.format.map((f) => (
-                    <Badge key={f}>{f}</Badge>
-                  ))}
-                </div>
-                <Link
-                  href={`/courses/${course.slug}`}
-                  className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-orange-600)] transition-all hover:gap-2.5"
-                >
-                  View {course.language} course details
-                  <ArrowRight size={16} />
-                </Link>
-              </Card>
+            {departments.map((department) => (
+              <DepartmentCard key={department.slug} department={department} />
             ))}
           </div>
         </Container>
       </section>
 
       <FinalCTA
-        title="Not sure which course is right for you?"
+        title="Not sure which department is right for you?"
         description="Contact us and we'll help you choose the right department, course and format."
       />
     </>
