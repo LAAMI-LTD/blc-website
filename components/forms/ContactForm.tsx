@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/input";
@@ -17,20 +16,11 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { departments } from "@/data/departments";
-
-const contactSchema = z.object({
-  fullName: z.string().min(2, "Please enter your full name."),
-  email: z.string().email("Please enter a valid email address."),
-  phone: z.string().optional(),
-  subject: z.string().optional(),
-  department: z.string().optional(),
-  message: z.string().min(10, "Please add a short message (10+ characters)."),
-});
-
-type ContactFormValues = z.infer<typeof contactSchema>;
+import { contactSchema, type ContactFormValues } from "@/lib/validation/contact";
 
 export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const {
     register,
@@ -40,23 +30,29 @@ export function ContactForm() {
     formState: { errors, isSubmitting },
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
+    defaultValues: { companyWebsite: "" },
   });
 
-  // Mock submission — replace with a real API call (e.g. POST /api/contact)
-  // once a backend is connected.
   async function onSubmit(values: ContactFormValues) {
     setStatus("idle");
+    setErrorMessage(null);
     try {
-      await new Promise((resolve, reject) =>
-        setTimeout(() => {
-          if (values.email.includes("@")) resolve(true);
-          else reject(new Error("Invalid submission"));
-        }, 900)
-      );
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error ?? "Something went wrong sending your message.");
+      }
+
       setStatus("success");
       reset();
-    } catch {
+    } catch (err) {
       setStatus("error");
+      setErrorMessage(err instanceof Error ? err.message : "Something went wrong.");
     }
   }
 
@@ -86,6 +82,20 @@ export function ContactForm() {
       noValidate
       className="grid grid-cols-1 gap-5 rounded-[var(--radius-lg)] border border-[var(--color-line)] bg-white p-6 md:p-8"
     >
+      {/* Honeypot field — hidden from real users (visually and from screen
+          readers), invisible in the tab order. Bots that auto-fill every
+          field will trip this; the server silently discards the submission. */}
+      <div aria-hidden="true" className="absolute left-[-9999px] top-auto h-0 w-0 overflow-hidden">
+        <label htmlFor="companyWebsite">Leave this field empty</label>
+        <input
+          id="companyWebsite"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          {...register("companyWebsite")}
+        />
+      </div>
+
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div className="grid gap-1.5">
           <Label htmlFor="fullName">
@@ -129,7 +139,19 @@ export function ContactForm() {
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div className="grid gap-1.5">
           <Label htmlFor="phone">Phone</Label>
-          <Input id="phone" type="tel" autoComplete="tel" {...register("phone")} />
+          <Input
+            id="phone"
+            type="tel"
+            autoComplete="tel"
+            aria-invalid={!!errors.phone}
+            aria-describedby={errors.phone ? "phone-error" : undefined}
+            {...register("phone")}
+          />
+          {errors.phone && (
+            <p id="phone-error" className="text-xs text-red-600">
+              {errors.phone.message}
+            </p>
+          )}
         </div>
 
         <div className="grid gap-1.5">
@@ -181,7 +203,7 @@ export function ContactForm() {
 
       {status === "error" && (
         <p role="alert" className="text-sm text-red-600">
-          Something went wrong sending your message. Please try again.
+          {errorMessage ?? "Something went wrong sending your message. Please try again."}
         </p>
       )}
 

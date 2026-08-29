@@ -1,6 +1,39 @@
 import { Course } from "@/types";
 import { Badge } from "@/components/ui/Badge";
 
+function CourseFields({ course, showLabels }: { course: Course; showLabels?: boolean }) {
+  return (
+    <>
+      {course.entryRequirement && (
+        <div className="flex items-baseline justify-between gap-3 text-sm">
+          {showLabels && <dt className="text-xs uppercase tracking-wide text-muted-foreground">Min. Entry Level</dt>}
+          <dd className="text-[var(--color-ink)]">{course.entryRequirement}</dd>
+        </div>
+      )}
+      {course.examBody && (
+        <div className="flex items-baseline justify-between gap-3 text-sm">
+          {showLabels && <dt className="text-xs uppercase tracking-wide text-muted-foreground">Exam Body</dt>}
+          <dd>
+            <Badge>{course.examBody}</Badge>
+          </dd>
+        </div>
+      )}
+      {course.duration && (
+        <div className="flex items-baseline justify-between gap-3 text-sm">
+          {showLabels && <dt className="text-xs uppercase tracking-wide text-muted-foreground">Duration</dt>}
+          <dd className="text-[var(--color-ink)]">{course.duration}</dd>
+        </div>
+      )}
+      {course.price && (
+        <div className="flex items-baseline justify-between gap-3 text-sm">
+          {showLabels && <dt className="text-xs uppercase tracking-wide text-muted-foreground">Price</dt>}
+          <dd className="font-medium text-[var(--color-orange-600)]">{course.price}</dd>
+        </div>
+      )}
+    </>
+  );
+}
+
 export function CourseTable({ title, courses }: { title: string; courses: Course[] }) {
   const hasEntryRequirement = courses.some((c) => c.entryRequirement);
   const hasExamBody = courses.some((c) => c.examBody);
@@ -12,7 +45,21 @@ export function CourseTable({ title, courses }: { title: string; courses: Course
       <div className="border-b border-[var(--color-line)] bg-[var(--color-paper-dim)] px-5 py-3">
         <h3 className="text-sm font-semibold text-[var(--color-green-950)]">{title}</h3>
       </div>
-      <div className="overflow-x-auto">
+
+      {/* Mobile: stacked cards — no horizontal scrolling required. */}
+      <dl className="divide-y divide-[var(--color-line)] sm:hidden">
+        {courses.map((course) => (
+          <div key={course.slug} className="space-y-1.5 px-5 py-4">
+            <dt className="font-medium text-[var(--color-ink)]">{course.name}</dt>
+            <div className="space-y-1">
+              <CourseFields course={course} showLabels />
+            </div>
+          </div>
+        ))}
+      </dl>
+
+      {/* sm and up: full table. */}
+      <div className="hidden sm:block sm:overflow-x-auto">
         <table className="w-full min-w-[520px] text-left text-sm">
           <thead>
             <tr className="border-b border-[var(--color-line)] text-xs uppercase tracking-wide text-muted-foreground">
