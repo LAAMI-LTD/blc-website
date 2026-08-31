@@ -11,6 +11,22 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
+/**
+ * UX DECISIONS:
+ *
+ * - The active-link indicator uses motion's `layoutId` so it's the SAME
+ *   element sliding between links, not a new underline appearing under
+ *   each active link independently. Because the Navbar lives in the root
+ *   layout (never unmounts on route change), this reads as one continuous
+ *   glide from "About" to "Courses" etc. — a small detail that makes
+ *   client-side navigation feel considered rather than templated.
+ * - The mobile menu's links stagger in (each ~40ms after the last)
+ *   instead of all appearing at once — cheap to implement, reads as
+ *   noticeably more polished than a flat fade.
+ * - Both animations are wrapped by `MotionConfig reducedMotion="user"` in
+ *   the root layout, so anyone with reduced-motion enabled at the OS
+ *   level gets an instant state change instead.
+ */
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -34,7 +50,7 @@ export function Navbar() {
       className={cn(
         "sticky top-0 z-50 w-full border-b transition-all duration-200",
         scrolled
-          ? "border-[var(--color-line)] bg-[var(--color-paper)]/95 shadow-sm backdrop-blur-sm"
+          ? "border-[var(--color-line)] bg-[var(--color-paper)]/95 shadow-sm backdrop-blur-md"
           : "border-transparent bg-[var(--color-paper)]/80 backdrop-blur-sm"
       )}
     >
@@ -68,11 +84,18 @@ export function Navbar() {
                 href={link.href}
                 aria-current={isActive ? "page" : undefined}
                 className={cn(
-                  "text-sm font-medium text-[var(--color-ink)] transition-colors hover:text-[var(--color-orange-600)]",
+                  "relative py-1 text-sm font-medium text-[var(--color-ink)] transition-colors hover:text-[var(--color-orange-600)]",
                   isActive && "text-[var(--color-orange-600)]"
                 )}
               >
                 {link.label}
+                {isActive && (
+                  <motion.span
+                    layoutId="navbar-active-indicator"
+                    className="absolute -bottom-1 left-0 h-0.5 w-full rounded-full bg-[var(--color-orange-600)]"
+                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                  />
+                )}
               </Link>
             );
           })}
@@ -105,27 +128,42 @@ export function Navbar() {
             transition={{ duration: 0.2, ease: "easeInOut" }}
             className="overflow-hidden border-t border-[var(--color-line)] bg-[var(--color-paper)] md:hidden"
           >
-            <Container className="flex flex-col gap-1 py-4">
-              {navLinks.map((link) => {
-                const isActive = pathname === link.href;
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    aria-current={isActive ? "page" : undefined}
-                    className={cn(
-                      "rounded-md px-3 py-3 text-base font-medium text-[var(--color-ink)] hover:bg-[var(--color-paper-dim)]",
-                      isActive && "text-[var(--color-orange-600)]"
-                    )}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
-              <Button href="/contact" size="md" className="mt-3 w-full">
-                Enquire Now
-              </Button>
-            </Container>
+            <motion.div
+              variants={{
+                open: { transition: { staggerChildren: 0.04, delayChildren: 0.05 } },
+              }}
+              initial="closed"
+              animate="open"
+            >
+              <Container className="flex flex-col gap-1 py-4">
+                {navLinks.map((link) => {
+                  const isActive = pathname === link.href;
+                  return (
+                    <motion.div
+                      key={link.href}
+                      variants={{
+                        closed: { opacity: 0, x: -8 },
+                        open: { opacity: 1, x: 0 },
+                      }}
+                    >
+                      <Link
+                        href={link.href}
+                        aria-current={isActive ? "page" : undefined}
+                        className={cn(
+                          "block rounded-md px-3 py-3 text-base font-medium text-[var(--color-ink)] hover:bg-[var(--color-paper-dim)]",
+                          isActive && "text-[var(--color-orange-600)]"
+                        )}
+                      >
+                        {link.label}
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+                <Button href="/contact" size="md" className="mt-3 w-full">
+                  Enquire Now
+                </Button>
+              </Container>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
