@@ -15,6 +15,7 @@ import {
 export const metadata: Metadata = {
   title: "Contact Us",
   description: `Get in touch with ${institution.name} (${institution.shortName}) to enquire about our Languages, ICT, Business & Technical Studies, Health Sciences and Professional Short Courses.`,
+  alternates: { canonical: "/contact" },
 };
 
 const infoItems = [

@@ -125,8 +125,20 @@ Without `RESEND_API_KEY` set, the contact form correctly returns a `503` error r
 - [x] Phase 3 — Information architecture (departments, courses, team, testimonials, hostel)
 - [x] Phase 4 — Contact & conversion (API route, WhatsApp button)
 - [x] Phase 5 — UI/UX polish
-- [ ] Phase 6 — SEO & performance
+- [x] Phase 6 — SEO & performance
 - [ ] Phase 7 — QA
+
+### Phase 6 notes
+
+- **Dedicated Open Graph image** (`app/opengraph-image.tsx`, using `next/og`'s `ImageResponse`) replaces the raw JPEG reference from Phase 2 with a properly-sized (1200×630) branded card generated from the real logo — verified by rendering it and viewing the actual PNG output during this build. Also auto-populates the Twitter card image via Next.js's file convention, so the manual `images` arrays were removed from `layout.tsx` metadata (one less place for the URL to go stale).
+- **Structured data (JSON-LD):**
+  - `components/seo/OrganizationJsonLd.tsx` — sitewide `EducationalOrganization` schema (name, description, phone, email, address locality, branches, departments) injected in the root layout. Only fields we can actually verify are populated — no fabricated founding date, accreditation body beyond the stated TVETA registration, or ratings.
+  - Each language course detail page (`/courses/[slug]`) additionally emits a `Course` schema referencing the institution as `provider`.
+  - Verified both render correctly in the actual HTML output of a running production build, not just assumed from the code.
+- **Canonical URLs** added via `alternates: { canonical: ... }` on all 5 static pages plus both dynamic route types (`/courses/[slug]`, `/departments/[slug]`) — confirmed present in rendered `<head>` output.
+- **Favicon/apple-touch-icon** wired explicitly via `metadata.icons` for broader device compatibility, still using the same generated `app/icon.png`.
+- **Performance:** audited every `"use client"` directive across the codebase — `WhatsAppButton` had one with zero hooks/state (a plain anchor tag), so it was converted back to a Server Component, trimming a small amount of client JS. The remaining 5 client components (`Navbar`, `ContactForm`, `Reveal`, and the two Radix-based `select`/`label` primitives) are all genuinely interactive and correctly need to stay client-side.
+- Dependency audit: no unused packages found in `package.json` — everything installed across all 6 phases is actively imported somewhere.
 
 ### Phase 5 notes
 

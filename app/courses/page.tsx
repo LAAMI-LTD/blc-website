@@ -9,6 +9,7 @@ import { institution } from "@/config/institution";
 export const metadata: Metadata = {
   title: "Courses & Departments",
   description: `Explore courses at ${institution.name} (${institution.shortName}) across Languages, ICT, Business & Technical Studies, Health Sciences and Professional Short Courses.`,
+  alternates: { canonical: "/courses" },
 };
 
 export default function CoursesPage() {

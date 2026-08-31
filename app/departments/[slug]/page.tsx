@@ -29,6 +29,7 @@ export async function generateMetadata({
   return {
     title: department.name,
     description: `${department.shortDescription} — part of ${institution.name} (${institution.shortName}).`,
+    alternates: { canonical: `/departments/${department.slug}` },
   };
 }
 
