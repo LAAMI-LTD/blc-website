@@ -1,41 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { contactSchema } from "@/lib/validation/contact";
+import { isRateLimited, getClientIp } from "@/lib/rate-limit";
 import { contact as contactConfig, institution } from "@/config/institution";
-
-// ---------------------------------------------------------------------------
-// Basic in-memory rate limiting.
-//
-// NOTE: this only protects a single warm serverless instance — on Vercel,
-// concurrent/cold-started instances don't share this Map, so it's a
-// best-effort deterrent, not a hard guarantee. For stronger protection in
-// production, back this with a shared store (e.g. Upstash Redis / Vercel KV)
-// and/or put the form behind a CAPTCHA (e.g. Cloudflare Turnstile).
-// ---------------------------------------------------------------------------
-const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
-const RATE_LIMIT_MAX_REQUESTS = 5;
-const requestLog = new Map<string, number[]>();
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const timestamps = (requestLog.get(ip) ?? []).filter(
-    (t) => now - t < RATE_LIMIT_WINDOW_MS
-  );
-  timestamps.push(now);
-  requestLog.set(ip, timestamps);
-  return timestamps.length > RATE_LIMIT_MAX_REQUESTS;
-}
-
-function getClientIp(req: NextRequest): string {
-  const forwardedFor = req.headers.get("x-forwarded-for");
-  if (forwardedFor) return forwardedFor.split(",")[0].trim();
-  return req.headers.get("x-real-ip") ?? "unknown";
-}
 
 export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
 
-  if (isRateLimited(ip)) {
+  if (isRateLimited(`contact:${ip}`)) {
     return NextResponse.json(
       { error: "Too many requests. Please try again in a minute." },
       { status: 429 }

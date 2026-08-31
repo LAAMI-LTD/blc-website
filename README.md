@@ -126,7 +126,67 @@ Without `RESEND_API_KEY` set, the contact form correctly returns a `503` error r
 - [x] Phase 4 — Contact & conversion (API route, WhatsApp button)
 - [x] Phase 5 — UI/UX polish
 - [x] Phase 6 — SEO & performance
-- [ ] Phase 7 — QA
+- [x] Phase 7 — QA
+- [x] Ad-hoc — World-class Footer/Navbar redesign (newsletter, mega-footer, developer credit)
+
+### Ad-hoc: Footer/Navbar redesign notes
+
+- **Mega-footer** (`components/layout/Footer.tsx`): asymmetric grid (brand column weighted `1.3fr` vs `0.9fr`/`0.9fr`/`1fr` for link columns), full-width newsletter band above the link grid, real trust signals only (TVETA registration, department/branch counts — no fabricated "as seen in" logos or star ratings), subtle blurred gradient shapes for depth.
+- **Newsletter signup is real**, not decorative: `app/api/newsletter/route.ts` adds subscribers to a Resend Audience, sharing the same honeypot + rate-limiting rigor as the contact form. Requires `RESEND_AUDIENCE_ID` (new) alongside the existing `RESEND_API_KEY`.
+- **Mobile link columns** collapse into native `<details>/<summary>` accordions (`components/layout/FooterAccordion.tsx`) — genuinely accessible (keyboard-operable, screen-reader-announced open/closed state) with zero JavaScript, not a custom ARIA reimplementation.
+- **Navbar** gained a shared-layout sliding active-link indicator (motion's `layoutId`, glides between routes since the Navbar never unmounts) and a staggered mobile-menu entrance.
+- **Contrast bug caught during this work:** the newsletter Subscribe button initially used `orange-500` at 2.89:1 against white text — added a proper `--color-orange-700` hover-state token and switched the button to the already-AA-compliant `orange-600` (5.56:1).
+- **Developer credit:** initially built as text-only because my tools couldn't retrieve Laami's actual logo binary from their site (only text content) and their domain isn't in this sandbox's bash network allowlist. Once you uploaded the real logo file, I cropped just the triangular mark (removing the "LAAMI LTD" wordmark portion, since the wordmark text is already set separately as "LAAMI LABS" next to it) and made the white background transparent — now live at `public/credits/laami-mark.png`.
+- **Note for future sections:** you asked me to remember this design brief (mega-layout, glassmorphism/gradient depth, real conversion CTAs, verified-only trust signals, accordion mobile UX, motion micro-interactions, full accessibility) to apply to other parts of the site later. I don't have persistent memory across separate conversations, so if this thread ends, you'd want to paste the brief again — but I'll keep applying it consistently for the rest of this conversation.
+
+### Phase 7 QA — Full Report
+
+**Process:** ran an actual production build (`npm run build`) in an isolated copy, started it (`npm run start`), and crawled every route via `curl` against the live server rather than only reading source code — this caught a real bug a code review alone would have missed.
+
+**Bug found and fixed:** `app/sitemap.ts` was still listing the full `courses` array (all ~110 courses across every department) instead of `languageCourses` — this would have submitted ~100 dead URLs to search engines pointing at course pages that don't exist (only the 9 language courses have individual detail pages; `dynamicParams: false` means those would 404). It was also missing `/testimonials` and the 5 `/departments/[slug]` routes. Fixed and reverified — sitemap now lists exactly the 20 real indexable pages.
+
+**Old-branding sweep:** grepped the entire codebase (all `.ts`/`.tsx`/`.css`/`.md`) for "Berlin Language Center", "Language Center", "Berlin, Germany", and "Germany". Two hits, both benign:
+  - `README.md`: an intentional historical note explaining the project's origin — internal documentation, not user-facing.
+  - `data/courses.ts`: `flagRegion: "Germany"` on the German course entry — this is the *language's* country of origin (legitimate metadata), not a leftover business-location claim. It's also currently unused in any rendered component (verified via grep) — harmless dead data, not a defect, left as-is per the "don't make unnecessary changes this close to launch" principle.
+
+**Link/image integrity:** extracted every internal `href` (including dynamic `${slug}` templates) and every `<Image src>` across the codebase and cross-checked them against real routes/files. Zero broken links, zero broken images — all dynamic hrefs are generated from the same data arrays that produce the pages themselves, so they can't drift out of sync.
+
+**Production checklist:**
+
+| Item | Status |
+|---|---|
+| No old branding remains | ✅ (2 benign exceptions explained above) |
+| BBTI logo appears correctly | ✅ |
+| Color system applied consistently | ✅ (2 contrast bugs found & fixed across Phases 5–7) |
+| Navbar / mobile navigation work | ✅ verified live |
+| All pages work (Home, About, Courses, Departments, Team, Testimonials, Contact) | ✅ all 21 pages crawled, HTTP 200 |
+| Contact form submits & notifies | ⚠️ Code is correct and tested (422/429/503/success paths all verified) — but **requires `RESEND_API_KEY` set in your real deployment** to actually send email. Correctly fails closed (503) rather than faking success without it. |
+| WhatsApp button works, correct number | ✅ `wa.me/254723222792` with pre-filled message, verified |
+| Phone / email / location / branches / hours correct | ✅ matches spec exactly |
+| Hostel ad appears correctly | ✅ real cropped asset, not stock |
+| No broken images / links | ✅ verified by cross-reference, not assumed |
+| No console errors | ✅ server logs clean across 21 real-page crawls (the only two log entries were expected `NoFallbackError`s from intentionally testing invalid slugs, which correctly 404) |
+| No TypeScript / lint / build errors | ✅ all three clean on final build |
+| Responsive design | ✅ mobile-specific implementations verified in rendered HTML (accordion footer, card-based tables, stacking hero) — not full pixel-level visual regression testing across every breakpoint, which this environment can't do without a real browser |
+| SEO metadata / favicon / OG / sitemap / robots | ✅ |
+| Accessibility | ✅ contrast fixed, native accordions, aria-current, focus rings, semantic landmarks — not a full screen-reader walkthrough |
+| Performance | ✅ client-JS audit done, static generation used everywhere possible |
+| Env vars documented | ✅ `.env.example` covers all 3 required variables |
+| Production env vars actually set | ❌ **your responsibility** — see Remaining Content below |
+
+### Remaining content BBTI must still supply
+
+- `RESEND_API_KEY` and a verified sending domain in Resend (currently defaults to `onboarding@resend.dev`, testing-only)
+- `RESEND_AUDIENCE_ID` for newsletter signups to actually store subscribers
+- Real Head of Department names, titles, and photos (`data/team.ts`)
+- Real student testimonials (`data/testimonials.ts`) — currently clearly-labeled samples
+- Social media URLs (`config/institution.ts` → `socialLinks`, currently empty)
+- Exact branch street addresses, if you want more than branch names shown
+- Confirmed final mission/vision wording for the About page (currently editable placeholders)
+
+### Production readiness verdict
+
+**READY FOR PRODUCTION**, conditional on setting the three environment variables above in your real deployment before launch. Everything else — code correctness, branding, accessibility, SEO, and content architecture — has been verified against a live running build, not just source review.
 
 ### Phase 6 notes
 

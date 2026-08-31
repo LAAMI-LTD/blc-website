@@ -19,6 +19,7 @@
 
   /* Orange from the arrows — CTA/highlight color */
   --color-orange-600: #a2530a;
+  --color-orange-700: #854408;
   --color-orange-500: #e97a12;
   --color-orange-400: #f0954a;
   --color-orange-100: #fce9d5;
@@ -77,6 +78,7 @@
   --color-teal-300: var(--color-teal-300);
   --color-teal-100: var(--color-teal-100);
   --color-orange-600: var(--color-orange-600);
+  --color-orange-700: var(--color-orange-700);
   --color-orange-500: var(--color-orange-500);
   --color-orange-400: var(--color-orange-400);
   --color-orange-100: var(--color-orange-100);
@@ -117,7 +119,7 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font-display), Georgia, serif;
-  color: var(--color-green-950);
+  color: inherit;
   letter-spacing: -0.01em;
 }
 
