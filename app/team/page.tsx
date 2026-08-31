@@ -11,6 +11,7 @@ import { institution } from "@/config/institution";
 export const metadata: Metadata = {
   title: "Our Team",
   description: `Meet the Heads of Department at ${institution.name} (${institution.shortName}).`,
+  alternates: { canonical: "/team" },
 };
 
 export default function TeamPage() {

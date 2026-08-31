@@ -1,5 +1,3 @@
-"use client";
-
 import { FaWhatsapp } from "react-icons/fa";
 import { contact, institution } from "@/config/institution";
 
@@ -18,7 +16,7 @@ export function WhatsAppButton() {
         rel="noopener noreferrer"
         aria-label={`Chat with ${institution.name} on WhatsApp`}
         title="Chat with us on WhatsApp"
-        className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-[#08af5c] text-white shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-transform duration-200 hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#08944e] motion-reduce:transition-none motion-reduce:hover:scale-100"
+        className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-[#128C7E] text-white shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-transform duration-200 hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#128C7E] motion-reduce:transition-none motion-reduce:hover:scale-100"
       >
         <FaWhatsapp size={30} aria-hidden="true" />
 

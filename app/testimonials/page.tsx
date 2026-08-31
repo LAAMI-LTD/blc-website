@@ -9,6 +9,7 @@ import { institution } from "@/config/institution";
 export const metadata: Metadata = {
   title: "Student Testimonials",
   description: `Read what students say about ${institution.name} (${institution.shortName}).`,
+  alternates: { canonical: "/testimonials" },
 };
 
 export default function TestimonialsPage() {

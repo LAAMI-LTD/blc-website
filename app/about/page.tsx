@@ -11,6 +11,7 @@ import { institution } from "@/config/institution";
 export const metadata: Metadata = {
   title: "About Us",
   description: `Learn about ${institution.name} (${institution.shortName}) — a career-focused, TVETA-accredited training institution in Kenya.`,
+  alternates: { canonical: "/about" },
 };
 
 const values = [

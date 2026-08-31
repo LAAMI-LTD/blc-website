@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { languageCourses } from "@/data/courses";
+import { institution } from "@/config/institution";
 
 // This route only ever renders the pre-generated language course pages —
 // other departments are listed on /departments/[slug] instead, since the
@@ -31,6 +32,7 @@ export async function generateMetadata({
   return {
     title: `${course.language} Courses`,
     description: course.description,
+    alternates: { canonical: `/courses/${course.slug}` },
   };
 }
 
@@ -43,8 +45,24 @@ export default async function CourseDetailPage({
   const course = getLanguageCourse(slug);
   if (!course) notFound();
 
+  const courseJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: `${course.language} Course`,
+    description: course.description,
+    provider: {
+      "@type": "EducationalOrganization",
+      name: institution.name,
+      sameAs: "https://bbtikenya.co.ke",
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseJsonLd) }}
+      />
       <section className="border-b border-[var(--color-line)] bg-[var(--color-paper-dim)] py-16 md:py-20">
         <Container className="flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
           <div>

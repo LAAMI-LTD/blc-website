@@ -5,6 +5,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/whatsapp/WhatsAppButton";
+import { OrganizationJsonLd } from "@/components/seo/OrganizationJsonLd";
 import { institution } from "@/config/institution";
 
 const manrope = Manrope({
@@ -27,6 +28,7 @@ export const metadata: Metadata = {
   },
   description: institution.description,
   metadataBase: new URL("https://bbtikenya.co.ke"),
+  alternates: { canonical: "/" },
   keywords: [
     "Berlin Business Training Institute",
     "BBTI",
@@ -36,19 +38,21 @@ export const metadata: Metadata = {
     "ICT training Kenya",
     "language courses Kenya",
   ],
+  icons: {
+    icon: "/icon.png",
+    apple: "/icon.png",
+  },
   openGraph: {
     title: `${institution.name} (${institution.shortName})`,
     description: institution.description,
     siteName: institution.name,
     locale: "en_KE",
     type: "website",
-    images: ["/logo/bbti-logo-lockup.jpeg"],
   },
   twitter: {
     card: "summary_large_image",
     title: `${institution.name} (${institution.shortName})`,
     description: institution.tagline,
-    images: ["/logo/bbti-logo-lockup.jpeg"],
   },
 };
 
@@ -58,6 +62,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${manrope.variable} ${inter.variable} antialiased`}>
+        <OrganizationJsonLd />
         <MotionConfig reducedMotion="user">
           <a
             href="#main-content"
