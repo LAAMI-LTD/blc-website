@@ -98,9 +98,18 @@ export const navLinks: NavLink[] = [
   { label: "Contact", href: "/contact" },
 ];
 
-// The organization has explicitly requested dummy/disabled links here
-// pending confirmed URLs — kept empty rather than fabricated, per
-// section 16 of the launch brief. Any UI consuming this array already
-// treats an empty array as "hide the social row" (see Footer.tsx), so
-// there is no dead-link risk.
-export const socialLinks: SocialLink[] = [];
+// Official BBTI social media accounts (handle: bbti.ke across all platforms)
+export const socialLinks: SocialLink[] = [
+  {
+    label: "Facebook",
+    href: "https://facebook.com/bbti.ke",
+  },
+  {
+    label: "Instagram",
+    href: "https://instagram.com/bbti.ke",
+  },
+  {
+    label: "TikTok",
+    href: "https://tiktok.com/@bbti.ke",
+  },
+];
