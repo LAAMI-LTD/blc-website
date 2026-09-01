@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/sections/PageHero";
 import { Container } from "@/components/ui/Container";
-import { Card } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
 import { FinalCTA } from "@/components/sections/FinalCTA";
-import { team } from "@/data/team";
-import { getDepartmentBySlug } from "@/data/departments";
+import { DirectorCard } from "@/components/team/DirectorCard";
+import { HodCard } from "@/components/team/HodCard";
+import { director, headsOfDepartment } from "@/data/team";
 import { institution } from "@/config/institution";
 
 export const metadata: Metadata = {
   title: "Our Team",
-  description: `Meet the Heads of Department at ${institution.name} (${institution.shortName}).`,
+  description: `Meet the Director and Heads of Department at ${institution.name} (${institution.shortName}).`,
   alternates: { canonical: "/team" },
 };
 
@@ -19,36 +18,23 @@ export default function TeamPage() {
     <>
       <PageHero
         eyebrow="Our Team"
-        title="Heads of Department"
-        description="Profile details below are placeholders pending final Head of Department names, photos and bios — this structure is ready for real institutional content."
+        title="Leadership & Heads of Department"
+        description="The people leading BBTI's departments and setting the standard for practical, career-focused training."
       />
 
       <section className="py-20 md:py-28">
-        <Container>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {team.map((member) => {
-              const department =
-                member.department !== "leadership" ? getDepartmentBySlug(member.department) : undefined;
-              return (
-                <Card key={member.slug}>
-                  <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-paper-dim)] text-xs font-medium text-muted-foreground">
-                    Photo
-                  </div>
-                  <h3 className="text-lg font-semibold text-[var(--color-green-950)]">
-                    {member.name}
-                  </h3>
-                  <p className="text-sm text-[var(--color-orange-600)]">{member.title}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                    {member.bio}
-                  </p>
-                  {department && (
-                    <div className="mt-4">
-                      <Badge>{department.name}</Badge>
-                    </div>
-                  )}
-                </Card>
-              );
-            })}
+        <Container className="flex flex-col gap-16">
+          {director && <DirectorCard director={director} />}
+
+          <div>
+            <h2 className="text-center text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-orange-600)]">
+              Department Heads
+            </h2>
+            <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {headsOfDepartment.map((member) => (
+                <HodCard key={member.slug} member={member} />
+              ))}
+            </div>
           </div>
         </Container>
       </section>

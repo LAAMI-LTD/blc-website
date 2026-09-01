@@ -128,6 +128,25 @@ Without `RESEND_API_KEY` set, the contact form correctly returns a `503` error r
 - [x] Phase 6 — SEO & performance
 - [x] Phase 7 — QA
 - [x] Ad-hoc — World-class Footer/Navbar redesign (newsletter, mega-footer, developer credit)
+- [x] Ad-hoc — Production launch content pass (real org data from "Organization Details b4 launch.docx")
+
+### Ad-hoc: Production launch content pass
+
+Real institutional content replaced remaining placeholders, sourced from the organization's "Organization Details b4 launch.docx":
+
+- **`config/institution.ts`**: full physical address (Rehema Complex Building, 4th Floor, Left Wing, Ronald Ngala Street, Eldoret), postal address (P.O. Box 5938-30100), confirmed production domain `bbti.co.ke`, Google Maps Plus Code (`G78G+GRW`) with a working embed + share URL (no API key needed). Branches now carry real addresses and phone numbers for Kapsabet, Bungoma, Busia and Kericho instead of just names.
+- **`app/contact/page.tsx`**: real Google Maps `<iframe>` embed plus an accessible "Open in Google Maps" fallback link, per-branch address/phone cards, postal address display.
+- **`data/team.ts` + `app/team/page.tsx`**: real Director (Paul Kefa) and 5 real Heads of Department (Felix Parnoti — Languages, Joel Chege — ICT, Mr Christopher Kiplagat — Business & Technical Studies, Mary Cheruto — Health Sciences, Ms Ajuma Kalasinga — Professional Short Courses), each with their real supplied professional biography. New `DirectorCard`, `HodCard` and `TeamPhoto` components give the Director full-width visual prominence above the HOD grid, per the required layout. No Director biography was supplied (the doc contains only an instruction placeholder), so the Director card shows name/title only rather than fabricating one.
+- **`app/about/page.tsx`**: real Mission and Vision statements (verbatim from the doc) and the 5 real Core Values (Integrity, Excellence, Hard Work, Networking, Efficiency), replacing all "editable placeholder" content.
+- **`data/testimonials.ts`**: real student names/courses (Mary Chebet — Caregiving, Ian Kimani — Basic Computer Packages, Joy Nekesa — IELTS, Oscar Kimutai — German, Patience Quinn — Cosmetology). The quote text stays a clearly-labeled "pending" placeholder, because the source document's testimonial fields were themselves instructional placeholders (e.g. "[Provide a clear and short correct testimony of the student]"), not actual approved quotes — inventing plausible-sounding quotes here would violate the no-fabrication requirement even though names are real.
+- **`components/departments/DepartmentCard.tsx`**: rebuilt for full-card imagery (`object-cover`, gradient scrim, name + "Explore Courses" pinned at the bottom, single clickable/keyboard-focusable surface). Falls back to a branded gradient + large icon when no real photo exists — which is currently every department, since no actual photography was supplied to this project (only filenames were named in the doc: `complab.jpg`, `computer.jpg`, `bbti.jpg`).
+- **`components/home/Hero.tsx`**: restructured to support an optional full-bleed video background (autoplay/muted/loop/playsInline, poster fallback, readability scrim) gated behind a `HAS_HERO_VIDEO` flag — currently `false` because the actual `Bbti.mp4`/`bbti.jpg` files were named in the doc but never uploaded to this project. Flipping the flag and adding the two files at `/public/hero/` activates it with no other changes needed.
+- **Domain migration**: `metadataBase`, sitemap, robots.txt and JSON-LD `sameAs` all updated from the placeholder `bbtikenya.co.ke` to the organization-confirmed production domain `bbti.co.ke`.
+- **Resend sender address** made configurable via a new `RESEND_FROM_EMAIL` env var (documented in `.env.example`), rather than hardcoded — ready for `info@bbti.co.ke` once that domain is verified in Resend.
+
+**One editorial correction made, worth your attention:** the source document's Health Sciences HOD biography literally reads "As the head of **technical studies** Mary Cheruto **Lagat** oversees..." — internally inconsistent with her actual section header (Health Sciences) and stated name (Mary Cheruto, no "Lagat"). This looks like a copy-paste artifact from another HOD's bio in the source document. I removed the contradictory phrase and surname rather than publish a visible inconsistency, but **please verify this with your source** — I did not have a way to confirm which version is correct.
+
+**Verified, not assumed:** ran a full production build, started it, and crawled every updated page checking for the actual new content (all 5 department cards, all 4 named HODs + Director, all 5 core values, the Google Maps embed, branch phone numbers) via `curl` against the live server. Full lint and type-check also clean.
 
 ### Ad-hoc: Footer/Navbar redesign notes
 

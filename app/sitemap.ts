@@ -3,7 +3,7 @@ import { languageCourses } from "@/data/courses";
 import { departments } from "@/data/departments";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://bbtikenya.co.ke";
+  const base = "https://bbti.co.ke";
 
   const staticRoutes = [
     "",

@@ -161,7 +161,9 @@ export function Footer() {
             <p className="mt-5 mb-2 text-xs font-semibold uppercase tracking-wide text-white/50">
               Branches
             </p>
-            <p className="text-sm text-white/70">{branches.join(" · ")}</p>
+            <p className="text-sm text-white/70">
+              {branches.map((b) => b.name).join(" · ")}
+            </p>
             <p className="mt-5 mb-2 text-xs font-semibold uppercase tracking-wide text-white/50">
               Business Hours
             </p>
