@@ -53,7 +53,7 @@ export default async function CourseDetailPage({
     provider: {
       "@type": "EducationalOrganization",
       name: institution.name,
-      sameAs: "https://bbtikenya.co.ke",
+      sameAs: "https://bbti.co.ke",
     },
   };
 

@@ -57,9 +57,10 @@ export async function POST(req: NextRequest) {
   try {
     const resend = new Resend(apiKey);
     const { error } = await resend.emails.send({
-      // Resend requires a verified sending domain in production; this
-      // default only works for testing until BBTI verifies a domain.
-      from: `${institution.shortName} Website <onboarding@resend.dev>`,
+      // Configurable via RESEND_FROM_EMAIL once bbti.co.ke is verified in
+      // Resend — see .env.example. Falls back to Resend's shared testing
+      // address, which works but should not be the final production sender.
+      from: process.env.RESEND_FROM_EMAIL || `${institution.shortName} Website <onboarding@resend.dev>`,
       to: recipient,
       replyTo: email,
       subject: subject?.trim() ? `[Website Enquiry] ${subject}` : `[Website Enquiry] New message from ${fullName}`,

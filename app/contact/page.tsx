@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { Phone, Mail, MapPin, MessageCircle, Building2 } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle, Building2, ExternalLink } from "lucide-react";
 import { PageHero } from "@/components/sections/PageHero";
 import { Container } from "@/components/ui/Container";
 import { ContactForm } from "@/components/forms/ContactForm";
-import { Badge } from "@/components/ui/Badge";
 import {
   contact,
   branches,
@@ -21,7 +20,11 @@ export const metadata: Metadata = {
 const infoItems = [
   { icon: Phone, label: "Phone", value: contact.phone, href: contact.phoneHref },
   { icon: Mail, label: "Email", value: contact.email, href: `mailto:${contact.email}` },
-  { icon: MapPin, label: "Location", value: contact.location },
+  {
+    icon: MapPin,
+    label: "Location",
+    value: `${contact.location}, ${contact.street}`,
+  },
   {
     icon: MessageCircle,
     label: "WhatsApp",
@@ -71,15 +74,36 @@ export default function ContactPage() {
                 </li>
               ))}
             </ul>
+            <p className="mt-4 pl-14 text-xs text-muted-foreground">
+              Postal Address: {contact.postalAddress}
+            </p>
 
             <h3 className="mt-10 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-[var(--color-orange-600)]">
               <Building2 size={16} /> Other Branches
             </h3>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {branches.map((b) => (
-                <Badge key={b}>{b}</Badge>
+            <ul className="mt-4 space-y-4">
+              {branches.map((branch) => (
+                <li
+                  key={branch.name}
+                  className="rounded-[var(--radius-md)] border border-[var(--color-line)] bg-white px-4 py-3"
+                >
+                  <p className="text-sm font-semibold text-[var(--color-green-950)]">
+                    {branch.name}
+                  </p>
+                  {branch.address && (
+                    <p className="mt-0.5 text-sm text-muted-foreground">{branch.address}</p>
+                  )}
+                  {branch.phone && (
+                    <a
+                      href={`tel:+254${branch.phone.replace(/^0/, "")}`}
+                      className="mt-0.5 block text-sm text-[var(--color-ink)] hover:text-[var(--color-orange-600)]"
+                    >
+                      {branch.phone}
+                    </a>
+                  )}
+                </li>
               ))}
-            </div>
+            </ul>
 
             <h3 className="mt-10 text-sm font-semibold uppercase tracking-wide text-[var(--color-orange-600)]">
               Business Hours
@@ -107,12 +131,24 @@ export default function ContactPage() {
               </div>
             )}
 
-            <div
-              aria-hidden
-              className="mt-10 flex h-48 items-center justify-center rounded-[var(--radius-lg)] border border-dashed border-[var(--color-line)] bg-[var(--color-paper-dim)] text-sm text-muted-foreground"
-            >
-              Map placeholder — embed {contact.location} once exact
-              coordinates are confirmed
+            {/* Google Maps — a plain embeddable URL, no API key required. */}
+            <div className="mt-10 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-line)]">
+              <iframe
+                src={contact.googleMaps.embedUrl}
+                title={`Map showing ${institution.shortName}'s location at ${contact.location}`}
+                className="h-64 w-full border-0 sm:h-80"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+              <a
+                href={contact.googleMaps.shareUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 border-t border-[var(--color-line)] bg-[var(--color-paper-dim)] px-4 py-3 text-sm font-medium text-[var(--color-green-900)] hover:text-[var(--color-orange-600)]"
+              >
+                Open in Google Maps
+                <ExternalLink size={14} />
+              </a>
             </div>
           </div>
 

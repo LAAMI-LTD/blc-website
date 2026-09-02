@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     template: `%s | ${institution.shortName}`,
   },
   description: institution.description,
-  metadataBase: new URL("https://bbtikenya.co.ke"),
+  metadataBase: new URL("https://bbti.co.ke"),
   alternates: { canonical: "/" },
   keywords: [
     "Berlin Business Training Institute",
