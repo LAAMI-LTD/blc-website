@@ -110,6 +110,6 @@ export const socialLinks: SocialLink[] = [
   },
   {
     label: "TikTok",
-    href: "https://tiktok.com/@bbti.ke",
+    href: "https://tiktok.com/bbti.ke",
   },
 ];
