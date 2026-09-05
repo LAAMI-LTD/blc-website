@@ -7,12 +7,12 @@ import { TeamMember } from "@/types";
 // files are added at /public/team/<photoFile>, flip hasPhoto to true.
 export const team: TeamMember[] = [
   {
-    slug: "paul-kamau",
-    name: "Paul Kamau",
+    slug: "paul-rotich",
+    name: "Paul Rotich",
     title: "Director",
     department: "leadership",
     isDirector: true,
-    bio: "Paul is the Head of Languages and BBTI and speaks over eight languages. Over 4 local languages with various dialect conversation and 5+ foreign languages. He has additional certifications in educational leadership and educational management training. Mr. Felix speaks not only Swahili and English but also French and German fluently. His teaching experience spans over 18 years with hands-on experience delivering specific frameworks like Cambridge, International Baccalaureate (IB), GCSE, or A-Level standards. Not to mention his pastoral and extra-curricular Experience in student welfare, boarding school environments, or organizing student activities",
+    bio: "Paul is the Head of Languages and BBTI and speaks over eight languages. Over 4 local languages with various dialect conversation and 5+ foreign languages. He has additional certifications in educational leadership and educational management training. Mr. Paul speaks not only Swahili and English but also French and German fluently. His teaching experience spans over 10+ years with hands-on experience delivering content to students. Not to mention his pastoral and extra-curricular Experience in student welfare and organizing student activities",
     photoFile: "director.jpeg",
     hasPhoto: true,
   },
