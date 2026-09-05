@@ -102,7 +102,7 @@ export const navLinks: NavLink[] = [
 export const socialLinks: SocialLink[] = [
   {
     label: "Facebook",
-    href: "https://facebook.com/bbti.ke",
+    href: "https://facebook.com/share/1JXYA8Youi/",
   },
   {
     label: "Instagram",
@@ -110,6 +110,6 @@ export const socialLinks: SocialLink[] = [
   },
   {
     label: "TikTok",
-    href: "https://tiktok.com/bbti.ke",
+    href: "https://tiktok.com/berlinlangauge254",
   },
 ];
