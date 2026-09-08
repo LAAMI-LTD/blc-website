@@ -16,6 +16,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { departments } from "@/data/departments";
+import { institution } from "@/config/institution";
 import { contactSchema, type ContactFormValues } from "@/lib/validation/contact";
 
 export function ContactForm() {
@@ -30,7 +31,7 @@ export function ContactForm() {
     formState: { errors, isSubmitting },
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
-    defaultValues: { companyWebsite: "" },
+    defaultValues: { companyWebsite: "", consent: false },
   });
 
   async function onSubmit(values: ContactFormValues) {
@@ -200,6 +201,38 @@ export function ContactForm() {
           </p>
         )}
       </div>
+
+      {/* Consent — required, never pre-checked. A distinct, explicit
+          acknowledgement rather than assuming consent from form
+          submission alone. */}
+      <div className="flex items-start gap-3">
+        <input
+          id="consent"
+          type="checkbox"
+          className="mt-1 h-4 w-4 shrink-0 rounded border-[var(--color-line)] text-[var(--color-orange-600)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+          aria-invalid={!!errors.consent}
+          aria-describedby={errors.consent ? "consent-error" : undefined}
+          {...register("consent")}
+        />
+        <label htmlFor="consent" className="text-sm text-[var(--color-ink)]">
+          I agree to the{" "}
+          <a
+            href="/privacy-policy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[var(--color-orange-600)] underline underline-offset-2 hover:text-[var(--color-orange-500)]"
+          >
+            Privacy Policy
+          </a>{" "}
+          and consent to {institution.shortName} contacting me about this enquiry.{" "}
+          <span className="text-[var(--color-orange-600)]">*</span>
+        </label>
+      </div>
+      {errors.consent && (
+        <p id="consent-error" className="-mt-3 text-xs text-red-600">
+          {errors.consent.message}
+        </p>
+      )}
 
       {status === "error" && (
         <p role="alert" className="text-sm text-red-600">

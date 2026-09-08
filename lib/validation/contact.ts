@@ -20,6 +20,9 @@ export const contactSchema = z.object({
     .trim()
     .min(10, "Please add a short message (10+ characters).")
     .max(3000, "Message is too long."),
+  consent: z.boolean().refine((val) => val === true, {
+    message: "Please confirm you agree to the Privacy Policy before submitting.",
+  }),
   // Honeypot — should stay empty for real users. Deliberately NOT
   // constrained to length 0 here: we want it to pass validation so the
   // route handler can silently discard bot submissions with a fake

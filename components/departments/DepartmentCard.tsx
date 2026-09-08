@@ -50,7 +50,7 @@ export function DepartmentCard({ department }: { department: Department }) {
         <div className="flex h-9 w-9 items-center justify-center rounded-[var(--radius-md)] bg-white/15 text-white backdrop-blur-sm">
           <Icon size={18} aria-hidden="true" />
         </div>
-        <h3 className="text-lg font-semibold text-white">{department.name}</h3>
+        <h3 className="text-lg font-semibold text-white!">{department.name}</h3>
         <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-orange-400)] transition-all group-hover:gap-2.5">
           Explore Courses
           <ArrowRight size={16} aria-hidden="true" />

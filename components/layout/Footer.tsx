@@ -179,6 +179,14 @@ export function Footer() {
         </div>
       </Container>
 
+      <div className="relative border-t border-white/10 py-5">
+        <Container className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-white/60 sm:justify-start">
+          <FooterLink href="/privacy-policy">Privacy Policy</FooterLink>
+          <FooterLink href="/terms-and-conditions">Terms &amp; Conditions</FooterLink>
+          <FooterLink href="/cookie-policy">Cookie Policy</FooterLink>
+        </Container>
+      </div>
+
       <div className="relative border-t border-white/10 py-6">
         <Container className="flex flex-col items-center justify-between gap-3 text-xs text-white/50 sm:flex-row">
           <p>

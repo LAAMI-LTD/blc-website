@@ -36,7 +36,7 @@ export const contact = {
   // plain URLs.
   googleMaps: {
     plusCode: "G78G+GRW",
-    query: "G78G+GRW, Ronald Ngala St, Eldoret",
+    query: "G78G+GRW Rehema Complex Building, Ronald Ngala St, Eldoret, Kenya",
     get embedUrl() {
       return `https://www.google.com/maps?q=${encodeURIComponent(this.query)}&output=embed`;
     },
