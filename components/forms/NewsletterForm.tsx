@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
+import { institution } from "@/config/institution";
 import { newsletterSchema, type NewsletterFormValues } from "@/lib/validation/newsletter";
 
 export function NewsletterForm() {
@@ -97,6 +98,14 @@ export function NewsletterForm() {
           {errorMessage}
         </p>
       )}
+      <p className="mt-3 text-xs text-white/50">
+        By subscribing, you agree to receive email updates from{" "}
+        {institution.shortName}. See our{" "}
+        <a href="/privacy-policy" className="underline underline-offset-2 hover:text-white">
+          Privacy Policy
+        </a>
+        . Unsubscribe anytime.
+      </p>
     </form>
   );
 }

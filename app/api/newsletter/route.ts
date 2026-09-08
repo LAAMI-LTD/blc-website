@@ -51,6 +51,10 @@ export async function POST(req: NextRequest) {
 
   try {
     const resend = new Resend(apiKey);
+    // Resend's Audience/Broadcast feature automatically includes
+    // unsubscribe handling (List-Unsubscribe headers + a hosted
+    // unsubscribe page) whenever a broadcast is sent to this audience —
+    // this codebase doesn't need to implement unsubscribe logic itself.
     const { error } = await resend.contacts.create({
       email,
       audienceId,

@@ -128,7 +128,25 @@ Without `RESEND_API_KEY` set, the contact form correctly returns a `503` error r
 - [x] Phase 6 — SEO & performance
 - [x] Phase 7 — QA
 - [x] Ad-hoc — World-class Footer/Navbar redesign (newsletter, mega-footer, developer credit)
-- [x] Ad-hoc — Production launch content pass (real org data from "Organization Details b4 launch.docx")
+- [x] Ad-hoc — Production launch content pass (real org data)
+- [x] Ad-hoc — Compliance, trust, accessibility, security & SEO audit
+
+### Ad-hoc: Compliance, trust, accessibility & security audit
+
+**Audit finding that shaped everything else:** this site has zero analytics, tracking scripts, cookies, or localStorage usage anywhere in the codebase (verified by grep across every `.ts`/`.tsx` file) — confirmed *before* deciding what compliance work was actually needed, rather than assuming a typical site's checklist applies.
+
+**Implemented:**
+- `/privacy-policy`, `/terms-and-conditions`, `/cookie-policy` — each describes only what this site actually does; no invented DPO, retention period, registration number, or legal basis. Terms & Conditions carries a visible "not yet reviewed by a Kenyan lawyer" notice.
+- **Refund/Cancellation Policy correctly NOT created** — this site processes no payments, so inventing refund terms would itself be a compliance risk.
+- **Click-to-load Google Maps** (`components/sections/MapEmbed.tsx`) — the only third-party embed on the site now loads only after an explicit click, so nothing from Google touches the browser by default. This is why no site-wide cookie-consent banner was added: there's nothing to gate behind one until the visitor opts in.
+- **Required, non-pre-checked consent checkbox** on the contact form, enforced **server-side** (`lib/validation/contact.ts`) — verified with a live `curl` request that submitting `consent: false` is rejected with a 422, not just hidden by client-side JS.
+- Newsletter form gained a privacy disclosure line (no checkbox — a single explicit subscribe action is standard practice for a single-field email opt-in).
+- Minimal security headers added in `next.config.ts` (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`) — deliberately no CSP, since an untuned one could silently break Google Maps/Fonts/Resend and that needs its own careful pass.
+- Custom branded `/app/not-found.tsx` (previously Next.js's bare default).
+- Footer gained Privacy/Terms/Cookie links; sitemap updated to include the 3 new pages.
+- Content audit: grepped for guarantees, awards, rankings, unsupported accreditation claims — found none. `npm audit`: 0 vulnerabilities.
+
+**Flagged, not fixed (requires BBTI/legal input) — see the full report below for the complete list.**
 
 ### Ad-hoc: Production launch content pass
 
@@ -138,8 +156,8 @@ Real institutional content replaced remaining placeholders, sourced from the org
 - **`app/contact/page.tsx`**: real Google Maps `<iframe>` embed plus an accessible "Open in Google Maps" fallback link, per-branch address/phone cards, postal address display.
 - **`data/team.ts` + `app/team/page.tsx`**: real Director (Paul Kefa) and 5 real Heads of Department (Felix Parnoti — Languages, Joel Chege — ICT, Mr Christopher Kiplagat — Business & Technical Studies, Mary Cheruto — Health Sciences, Ms Ajuma Kalasinga — Professional Short Courses), each with their real supplied professional biography. New `DirectorCard`, `HodCard` and `TeamPhoto` components give the Director full-width visual prominence above the HOD grid, per the required layout. No Director biography was supplied (the doc contains only an instruction placeholder), so the Director card shows name/title only rather than fabricating one.
 - **`app/about/page.tsx`**: real Mission and Vision statements (verbatim from the doc) and the 5 real Core Values (Integrity, Excellence, Hard Work, Networking, Efficiency), replacing all "editable placeholder" content.
-- **`data/testimonials.ts`**: real student names/courses (Mary Chebet — Caregiving, Ian Kimani — Basic Computer Packages, Joy Nekesa — IELTS, Oscar Kimutai — German, Patience Quinn — Cosmetology). The quote text stays a clearly-labeled "pending" placeholder, because the source document's testimonial fields were themselves instructional placeholders (e.g. "[Provide a clear and short correct testimony of the student]"), not actual approved quotes — inventing plausible-sounding quotes here would violate the no-fabrication requirement even though names are real.
-- **`components/departments/DepartmentCard.tsx`**: rebuilt for full-card imagery (`object-cover`, gradient scrim, name + "Explore Courses" pinned at the bottom, single clickable/keyboard-focusable surface). Falls back to a branded gradient + large icon when no real photo exists — which is currently every department, since no actual photography was supplied to this project (only filenames were named in the doc: `complab.jpg`, `computer.jpg`, `bbti.jpg`).
+- **`data/testimonials.ts`**: real student names/courses (Mary Chebet — Caregiving, Ian Kimani — Basic Computer Packages, Joy Nekesa — IELTS, Oscar Kimutai — German, Patience Quinn — Cosmetology). The quote text stays a clearly-labeled "pending" placeholder, beExplore Coursescause the source document's testimonial fields were themselves instructional placeholders (e.g. "[Provide a clear and short correct testimony of the student]"), not actual approved quotes — inventing plausible-sounding quotes here would violate the no-fabrication requirement even though names are real.
+- **`components/departments/DepartmentCard.tsx`**: rebuilt for full-card imagery (`object-cover`, gradient scrim, name + "" pinned at the bottom, single clickable/keyboard-focusable surface). Falls back to a branded gradient + large icon when no real photo exists — which is currently every department, since no actual photography was supplied to this project (only filenames were named in the doc: `complab.jpg`, `computer.jpg`, `bbti.jpg`).
 - **`components/home/Hero.tsx`**: restructured to support an optional full-bleed video background (autoplay/muted/loop/playsInline, poster fallback, readability scrim) gated behind a `HAS_HERO_VIDEO` flag — currently `false` because the actual `Bbti.mp4`/`bbti.jpg` files were named in the doc but never uploaded to this project. Flipping the flag and adding the two files at `/public/hero/` activates it with no other changes needed.
 - **Domain migration**: `metadataBase`, sitemap, robots.txt and JSON-LD `sameAs` all updated from the placeholder `bbtikenya.co.ke` to the organization-confirmed production domain `bbti.co.ke`.
 - **Resend sender address** made configurable via a new `RESEND_FROM_EMAIL` env var (documented in `.env.example`), rather than hardcoded — ready for `info@bbti.co.ke` once that domain is verified in Resend.

@@ -3,6 +3,7 @@ import { Phone, Mail, MapPin, MessageCircle, Building2, ExternalLink } from "luc
 import { PageHero } from "@/components/sections/PageHero";
 import { Container } from "@/components/ui/Container";
 import { ContactForm } from "@/components/forms/ContactForm";
+import { MapEmbed } from "@/components/sections/MapEmbed";
 import {
   contact,
   branches,
@@ -131,15 +132,10 @@ export default function ContactPage() {
               </div>
             )}
 
-            {/* Google Maps — a plain embeddable URL, no API key required. */}
+            {/* Google Maps — click-to-load; see components/sections/MapEmbed.tsx
+                for why this isn't embedded unconditionally. */}
             <div className="mt-10 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-line)]">
-              <iframe
-                src={contact.googleMaps.embedUrl}
-                title={`Map showing ${institution.shortName}'s location at ${contact.location}`}
-                className="h-64 w-full border-0 sm:h-80"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
+              <MapEmbed />
               <a
                 href={contact.googleMaps.shareUrl}
                 target="_blank"
