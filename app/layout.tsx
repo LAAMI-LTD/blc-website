@@ -5,6 +5,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/whatsapp/WhatsAppButton";
+import { CookieConsent } from "@/components/layout/CookieConsent";
 import { OrganizationJsonLd } from "@/components/seo/OrganizationJsonLd";
 import { institution } from "@/config/institution";
 
@@ -74,6 +75,7 @@ export default function RootLayout({
           <main id="main-content">{children}</main>
           <Footer />
           <WhatsAppButton />
+          <CookieConsent />
         </MotionConfig>
       </body>
     </html>

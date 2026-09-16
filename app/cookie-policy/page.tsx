@@ -55,14 +55,15 @@ export default function CookiePolicyPage() {
             </p>
           </LegalSection>
 
-          <LegalSection title="3. No cookie banner">
+          <LegalSection title="3. Consent choice">
             <p>
-              Because this website sets no cookies of its own, and the one
-              third-party embed on the site is opt-in (click-to-load) by
-              design, we haven&apos;t added a site-wide cookie-consent banner.
-              If that changes — for example, if analytics is added in the
-              future — this policy and the site&apos;s consent mechanism will
-              be updated accordingly.
+              When you first visit this website, a banner asks whether you
+              accept cookies. Your response is saved in one strictly
+              necessary cookie named <code>bbti-cookie-consent</code> so we do
+              not ask again for one year. This cookie does not identify you,
+              track you, or contain personal information. You can decline and
+              continue browsing; Google Maps remains separately opt-in and
+              loads only when you choose to view it.
             </p>
           </LegalSection>
 
