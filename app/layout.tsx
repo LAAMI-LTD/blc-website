@@ -6,6 +6,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/whatsapp/WhatsAppButton";
 import { CookieConsent } from "@/components/layout/CookieConsent";
+import { GoogleAnalytics } from "@/components/layout/GoogleAnalytics";
 import { OrganizationJsonLd } from "@/components/seo/OrganizationJsonLd";
 import { institution } from "@/config/institution";
 
@@ -76,6 +77,7 @@ export default function RootLayout({
           <Footer />
           <WhatsAppButton />
           <CookieConsent />
+          <GoogleAnalytics />
         </MotionConfig>
       </body>
     </html>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const CONSENT_COOKIE = "bbti-cookie-consent";
+const CONSENT_EVENT = "bbti-cookie-consent-change";
 
 function hasConsentCookie() {
   return document.cookie.split("; ").some((cookie) => cookie.startsWith(`${CONSENT_COOKIE}=`));
@@ -22,6 +23,7 @@ export function CookieConsent() {
 
   function respond(value: "accepted" | "declined") {
     document.cookie = `${CONSENT_COOKIE}=${value}; path=/; max-age=31536000; SameSite=Lax`;
+    window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: value }));
     setIsVisible(false);
   }
 
@@ -35,9 +37,9 @@ export function CookieConsent() {
       <div className="mx-auto flex max-w-width flex-col gap-4 px-4 py-4 sm:px-6 md:flex-row md:items-center md:justify-between md:gap-8 lg:px-8">
         <p className="max-w-4xl text-sm leading-relaxed text-white/85">
           Berlin Business Training Institute respects your privacy. This website
-          does not use advertising or tracking cookies. We use one strictly
-          necessary cookie to remember your choice, and Google Maps loads only
-          when you ask to view it. By choosing &quot;Accept&quot;, you acknowledge our{" "}
+          does not use advertising cookies. With your permission, privacy-friendly
+          Google Analytics helps us understand how visitors use the site. Google
+          Maps loads only when you ask to view it. By choosing &quot;Accept&quot;, you acknowledge our{" "}
           <Link href="/privacy-policy" className="font-semibold text-white underline underline-offset-2 hover:text-orange-400">
             Privacy Policy
           </Link>

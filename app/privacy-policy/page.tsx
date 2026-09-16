@@ -47,10 +47,11 @@ export default function PrivacyPolicyPage() {
               </li>
             </ul>
             <p>
-              We do not use cookies, analytics, or tracking scripts of our
-              own on this website, and we do not ask for information such
-              as national ID numbers, date of birth, or physical address
-              through these forms.
+              We use a strictly necessary cookie to remember your consent
+              choice. With your permission, Google Analytics uses cookies to
+              provide us with aggregated information about how visitors use
+              this website. We do not ask for information such as national ID
+              numbers, date of birth, or physical address through these forms.
             </p>
           </LegalSection>
 
@@ -75,6 +76,12 @@ export default function PrivacyPolicyPage() {
                 data on our behalf as part of delivering these services.
               </li>
               <li>
+                <strong>Google Analytics</strong> — used only after you
+                choose &quot;Accept&quot; in the consent banner to provide
+                aggregated website-usage reports. Google may process data
+                according to its own privacy policies.
+              </li>
+              <li>
                 <strong>Google Maps</strong> — an embedded map is
                 available on our Contact page, loaded only if you choose
                 to view it. See our{" "}
@@ -88,9 +95,11 @@ export default function PrivacyPolicyPage() {
               </li>
             </ul>
             <p>
-              This website does not currently use Google Analytics, Meta
-              Pixel, or any other analytics or advertising tracking
-              service.
+              With your consent, this website uses Google Analytics, a
+              third-party analytics service provided by Google LLC. It helps
+              us understand website usage through aggregated reports. We do
+              not use Meta Pixel or advertising tracking services, and we do
+              not sell personal information.
             </p>
           </LegalSection>
 

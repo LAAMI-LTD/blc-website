@@ -24,10 +24,11 @@ export default function CookiePolicyPage() {
         <Container className="max-w-3xl">
           <LegalSection title="1. Our approach to cookies">
             <p>
-              This website does not use analytics, advertising, or
-              tracking cookies of its own, and does not store anything in
-              your browser&apos;s local storage. We have deliberately kept it
-              this way rather than adding tracking &quot;by default.&quot;
+              This website does not use advertising cookies. With your
+              permission, Google Analytics may use analytics cookies to help
+              us understand how visitors use the site. Analytics is not
+              loaded before you choose &quot;Accept&quot; in the consent banner.
+              We do not store anything in your browser&apos;s local storage.
             </p>
           </LegalSection>
 
@@ -62,8 +63,9 @@ export default function CookiePolicyPage() {
               necessary cookie named <code>bbti-cookie-consent</code> so we do
               not ask again for one year. This cookie does not identify you,
               track you, or contain personal information. You can decline and
-              continue browsing; Google Maps remains separately opt-in and
-              loads only when you choose to view it.
+              continue browsing; Google Analytics will not load, and Google
+              Maps remains separately opt-in and loads only when you choose to
+              view it.
             </p>
           </LegalSection>
 
